@@ -1,0 +1,3 @@
+export function CircleArt({ dark = false }: { dark?: boolean }) {
+  return <div className={`circle-art ${dark ? "circle-art-dark" : ""}`} aria-hidden="true"><svg viewBox="0 0 400 400" fill="none"><circle cx="200" cy="200" r="174" className="circle-track" />{Array.from({ length: 8 }, (_, index) => <g transform={`rotate(${index * 45} 200 200)`} key={index}><ellipse cx="200" cy="142" rx="58" ry="107" className="circle-petal" /><circle cx="200" cy="26" r="5" className="circle-point" /></g>)}<circle cx="200" cy="200" r="56" className="circle-centre" /></svg><div className="circle-art-centre">8<span>minds, one circle</span></div><span className="circle-art-note">Different strengths. A shared purpose.</span></div>;
+}

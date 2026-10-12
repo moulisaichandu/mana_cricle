@@ -1,0 +1,71 @@
+@layer photography {
+  .studio-photo { margin: 0; min-width: 0; }
+  .studio-photo-frame { position: relative; aspect-ratio: 1.12; border-radius: 16px; overflow: hidden; background: #dfdfd2; }
+  .studio-photo-frame > img { object-fit: cover; object-position: 48% 50%; }
+  .studio-photo-mark { position: absolute; right: 22px; bottom: 22px; width: 58px; height: 58px; display: grid; place-items: center; border-radius: 50%; color: #fffefa; background: var(--ink); }
+  .studio-photo figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; font-size: 12px; padding-top: 16px; }
+  .studio-photo figcaption > span:last-child { color: var(--muted); font-size: 10px; }
+  .identity-photo { position: relative; min-height: 280px; overflow: hidden; transform: rotate(4deg); margin-block: 14px; background: #c7beab; }
+  .identity-photo img { object-fit: cover; object-position: 39% 50%; }
+  .identity-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #122017b8, transparent 40%, transparent 55%, #122017df); }
+  .identity-photo > span { position: absolute; z-index: 1; color: #fffefa; left: 18px; }
+  .identity-photo-brand { top: 14px; font: 25px Georgia, serif; }
+  .identity-photo-caption { bottom: 18px; right: 12px; font: 23px/1.12 Georgia, serif; letter-spacing: -.5px; }
+  .menu-art-photo { position: relative; isolation: isolate; min-height: 460px; padding: 35px; justify-content: space-between; align-items: flex-end; }
+  .menu-setting { z-index: -2; object-fit: cover; object-position: 45% 50%; }
+  .menu-art-photo::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #153f3510, #153f353b); }
+  .menu-art-photo .menu-table-card { padding: 22px 16px; margin-bottom: 7px; box-shadow: 0 12px 22px #25201626; }
+  .menu-art-photo .menu-device { margin-block: 0 16px; }
+  .menu-coffee-photo { position: relative; height: 72px; border-radius: 8px; overflow: hidden; margin-top: 12px; }
+  .menu-coffee-photo img { object-fit: cover; object-position: 50% 58%; }
+  .menu-art-photo .menu-section-label { margin-top: 12px; }
+  .menu-art-photo .menu-item { padding-block: 10px; }
+  .telugu-art-photo { position: relative; display: block; padding: 0; background: #d7d7c9; height: 475px; min-height: 0; }
+  .voiceover-setting { object-fit: cover; object-position: 34% 50%; }
+  .voiceover-photo-label { position: absolute; top: 22px; left: 22px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 30px; background: #fffef5; color: var(--ink); font-size: 11px; }
+  .telugu-art-photo .telugu-script { position: absolute; right: 24px; bottom: 22px; width: 220px; margin: 0; padding: 22px 25px; box-shadow: 0 8px 22px #15231826; transform: rotate(3deg); }
+  .telugu-art-photo .telugu-script > p { font-size: 28px; line-height: 1.5; margin-block: 13px; }
+  .telugu-art-photo .telugu-script > span { font-size: 9px; }
+  .telugu-art-photo .telugu-script > div { font-size: 7px; gap: 10px; }
+  @media (max-width: 1100px) {
+    .identity-photo { min-height: 280px; }
+    .menu-art-photo { padding: 25px; gap: 15px; }
+    .menu-art-photo .menu-table-card { padding-inline: 12px; }
+    .menu-art-photo .menu-table-card strong { font-size: 21px; }
+    .telugu-art-photo .telugu-script { width: 195px; right: 18px; padding: 20px; }
+  }
+  @media (max-width: 900px) {
+    .menu-art-photo { justify-content: center; gap: 50px; padding: 32px; }
+    .telugu-art-photo { height: 460px; padding: 0; }
+    .telugu-art-photo .telugu-script { width: 230px; right: 30px; bottom: 27px; }
+  }
+  @media (max-width: 600px) {
+    .studio-photo-frame { aspect-ratio: 1.12; border-radius: 13px; }
+    .studio-photo-mark { width: 49px; height: 49px; right: 17px; bottom: 17px; }
+    .studio-photo figcaption { font-size: 11px; padding-top: 12px; }
+    .identity-photo { min-height: 258px; margin-block: 10px; }
+    .identity-photo > span { left: 12px; }
+    .identity-photo-brand { font-size: 20px; }
+    .identity-photo-caption { font-size: 20px; }
+    .menu-art-photo { min-height: 420px; padding: 22px 18px; gap: 16px; }
+    .menu-art-photo .menu-table-card { padding: 19px 10px; }
+    .menu-art-photo .menu-table-card strong { font-size: 18px; }
+    .menu-art-photo .menu-device { margin-bottom: 12px; }
+    .menu-coffee-photo { height: 58px; }
+    .telugu-art-photo { height: 430px; min-height: 0; padding: 0; }
+    .voiceover-setting { object-position: 29% 50%; }
+    .voiceover-photo-label { left: 17px; top: 17px; font-size: 10px; }
+    .telugu-art-photo .telugu-script { width: 178px; right: 18px; bottom: 20px; padding: 17px 19px; }
+    .telugu-art-photo .telugu-script > p { font-size: 26px; }
+    .telugu-art-photo .telugu-script > span { font-size: 8px; }
+    .telugu-art-photo .telugu-script > div { font-size: 6px; gap: 8px; }
+  }
+  @media (max-width: 360px) {
+    .identity-photo { min-height: 238px; }
+    .identity-photo-caption { font-size: 18px; }
+    .menu-art-photo { padding-inline: 12px; gap: 12px; }
+    .menu-art-photo .menu-table-card { padding-inline: 8px; }
+    .menu-art-photo .menu-table-card strong { font-size: 16px; }
+    .menu-art-photo .menu-device { width: 157px; }
+  }
+}

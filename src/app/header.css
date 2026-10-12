@@ -1,0 +1,113 @@
+/* Shared identity and navigation; scoped independently from the page layouts. */
+.brand-lockup {
+  display:inline-flex; align-items:center; flex-shrink:0; gap:11px;
+  color:var(--ink); line-height:1; text-decoration:none;
+}
+.brand-lockup > svg { width:46px; height:46px; flex-shrink:0; }
+.brand-type { display:flex; flex-direction:column; gap:6px; }
+.brand-name { font-size:31px; font-weight:670; letter-spacing:-1.55px; }
+.brand-name > span { font-weight:430; }
+.brand-descriptor { font-size:10px; font-weight:500; letter-spacing:1.25px; }
+.site-header .header-inner { position:relative; min-height:92px; }
+.site-header .main-nav { align-self:stretch; gap:27px; font-size:13px; }
+.nav-services { align-self:stretch; display:flex; align-items:center; }
+.services-trigger { display:flex; align-items:center; border-radius:6px; }
+.services-trigger > a { padding-block:15px; border-bottom:1px solid transparent; }
+.services-trigger.is-current > a,
+.services-trigger > a:hover { border-bottom-color:var(--green); }
+.services-toggle {
+  display:grid; place-items:center; width:30px; min-height:44px; padding:0;
+  border:0; border-radius:6px; background:transparent;
+}
+.services-toggle:hover, .services-toggle[aria-expanded="true"] { background:var(--olive); }
+.services-toggle svg { transition:transform 160ms ease; }
+.services-toggle[aria-expanded="true"] svg { transform:rotate(180deg); }
+.services-dropdown {
+  position:absolute; top:calc(100% - 1px); right:0;
+  width:min(930px,100%); padding:29px 28px 0;
+  background:var(--page); border:1px solid var(--line);
+  border-radius:0 0 18px 18px; box-shadow:0 24px 44px #173e3526;
+  max-height:calc(100svh - 93px); overflow-y:auto;
+}
+.services-dropdown[hidden] { display:none; }
+.services-dropdown-grid { display:grid; grid-template-columns:1.12fr .88fr 1.12fr; gap:24px; }
+.services-dropdown-group + .services-dropdown-group { border-left:1px solid var(--line); padding-left:24px; }
+.services-dropdown-group h2 {
+  display:flex; align-items:center; gap:10px; margin:0 0 14px;
+  font-size:15px; line-height:1.35; letter-spacing:-.3px; font-weight:650;
+}
+.services-dropdown-group h2 > span {
+  display:grid; place-items:center; width:33px; height:33px; flex-shrink:0;
+  background:var(--olive); border-radius:50%;
+}
+.services-dropdown-group ul { list-style:none; padding:0; margin:0; }
+.services-dropdown-group li + li { margin-top:2px; }
+.services-dropdown-group li a {
+  display:flex; align-items:center; justify-content:space-between; gap:9px;
+  min-height:44px; padding:9px 8px; margin-inline:-8px; border-radius:6px;
+  font-size:13px; font-weight:450; line-height:1.45; color:var(--muted);
+}
+.services-dropdown-group li a > svg { flex-shrink:0; opacity:.5; }
+.services-dropdown-group li a:hover,
+.services-dropdown-group li a:focus-visible,
+.services-dropdown-group li a[aria-current="page"] { color:var(--ink); background:var(--olive); }
+.services-dropdown-group li a:hover > svg { opacity:1; }
+.services-dropdown-bottom {
+  display:flex; align-items:center; justify-content:space-between; gap:20px;
+  border-top:1px solid var(--line); margin-top:24px; padding-block:17px;
+}
+.services-dropdown-bottom > span { font-size:12px; color:var(--muted); font-weight:400; }
+.services-dropdown-bottom a { display:inline-flex; align-items:center; gap:12px; min-height:36px; font-size:13px; }
+.services-dropdown-bottom a:hover { text-decoration:underline; text-underline-offset:4px; }
+.site-footer .brand-lockup { margin-bottom:0; }
+.site-footer .brand-lockup > svg { width:42px; height:42px; }
+.site-footer .brand-name { font-size:29px; }
+.studio-photo-mark { color:var(--ink); background:var(--page); }
+.studio-photo-mark > svg { width:48px; height:48px; }
+
+@media (min-width:901px) and (max-width:1100px) {
+  .site-header .main-nav { gap:18px; font-size:12px; }
+  .site-header .nav-cta { padding-inline:17px; gap:14px; }
+  .site-header .brand-name { font-size:28px; }
+  .site-header .brand-lockup > svg { width:42px; height:42px; }
+  .site-header .brand-descriptor { font-size:9px; letter-spacing:1px; }
+}
+@media (max-width:900px) {
+  .site-header .header-inner { min-height:80px; position:static; }
+  .site-header .brand-lockup > svg { width:41px; height:41px; }
+  .site-header .brand-name { font-size:28px; }
+  .site-header .brand-descriptor { font-size:9px; letter-spacing:1.1px; }
+  .site-header .main-nav {
+    top:100%; left:0; right:0; gap:6px; border-radius:0;
+    max-height:calc(100svh - 81px); overflow-y:auto; overscroll-behavior:contain;
+    padding:12px 24px 24px; box-shadow:0 18px 30px #173e351a;
+  }
+  .nav-services { display:block; }
+  .services-trigger { justify-content:space-between; }
+  .services-trigger > a { flex:1; font-size:16px; padding:13px 9px; }
+  .services-toggle { width:44px; margin-right:1px; }
+  .services-dropdown {
+    position:static; width:100%; padding:19px 18px 0; margin-block:6px 12px;
+    border-radius:10px; background:#f0f2ec; box-shadow:none;
+    max-height:none; overflow:visible;
+  }
+  .services-dropdown-grid { grid-template-columns:1fr; gap:21px; }
+  .services-dropdown-group + .services-dropdown-group { border-left:0; border-top:1px solid var(--line); padding:19px 0 0; }
+  .services-dropdown-group h2 { font-size:14px; margin-bottom:8px; }
+  .services-dropdown-group h2 > span { width:28px; height:28px; background:var(--page); }
+  .services-dropdown-group li a { font-size:14px; min-height:44px; }
+  .services-dropdown-bottom { margin-top:18px; padding-block:10px; }
+  .services-dropdown-bottom > span { display:none; }
+  .services-dropdown-bottom a { min-height:44px; }
+}
+@media (max-width:600px) {
+  .site-header .header-inner { min-height:76px; }
+  .site-header .main-nav { max-height:calc(100svh - 77px); padding-inline:20px; }
+  .site-header .brand-lockup { gap:9px; }
+  .site-header .brand-lockup > svg { width:39px; height:39px; }
+  .site-header .brand-name { font-size:27px; letter-spacing:-1.3px; }
+  .site-header .brand-descriptor { font-size:8.5px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .services-toggle svg { transition:none; }
+}

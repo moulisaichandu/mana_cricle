@@ -1,0 +1,7 @@
+import { ImageResponse } from "next/og";
+export const alt = "ManaCircle — Brands with character. Websites with purpose.";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+export default function OpenGraphImage() {
+  return new ImageResponse(<div style={{ display: "flex", flexDirection: "column", background: "#faf9f5", color: "#173e35", width: "100%", height: "100%", padding: "65px 80px", fontFamily: "sans-serif" }}><div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 30, color: "#24624e" }}><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#173e35" /><path d="M12 32V21a6 6 0 0 1 12 0v11m0-11a6 6 0 0 1 12 0v11" fill="none" stroke="#faf9f5" strokeWidth="3.2" strokeLinecap="round" /></svg>manacircle</div><div style={{ display: "flex", fontSize: 73, lineHeight: 1.08, letterSpacing: -5, marginTop: 65 }}>Brands with character.<br />Websites with purpose.</div><div style={{ display: "flex", fontSize: 24, marginTop: 45, color: "#5d6864" }}>Branding. Websites. Apps. English & Telugu content.</div><div style={{ display: "flex", position: "absolute", right: 70, bottom: 55, border: "2px solid #24624e", borderRadius: 100, width: 135, height: 135, alignItems: "center", justifyContent: "center" }}><svg width="50" height="50" viewBox="0 0 50 50"><path d="M10 40L40 10M10 10H40V40" stroke="#24624e" strokeWidth="3" fill="none" /></svg></div></div>, size);
+}

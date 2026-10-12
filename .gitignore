@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.cache/
+.env*
+!.env.example
+*.tsbuildinfo
+test-results/
+playwright-report/
+.artifacts/
+.playwright-mcp/
+manacircle-*-initial.png
