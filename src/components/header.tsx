@@ -70,7 +70,7 @@ export function Header({ serviceGroups }: { serviceGroups: ServiceGroup[] }) {
   };
 
   return (
-    <header ref={header} className="site-header" onBlur={event => {
+    <header ref={header} className={`site-header${path === "/" ? " is-home" : ""}`} onBlur={event => {
       if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
     }}>
       <div className="container header-inner">

@@ -1,26 +1,31 @@
-# ManaCircle: identity and content rework
+# ManaCircle — clear, premium studio website
 
-## Accepted direction
-Client feedback: the previous site feels generic and the offer is not convincing. Keep warm white and deep green, with a bolder modern creative agency identity. Build the entire experience around the business owner's decisions: what to make, what is included, how to start.
+Updated 13 October 2026. The owner supplied [Patnam Pakodi](https://patnampakodi.com/) as the new visual reference after rejecting the previous homepage. Its readable sans-serif type, soft surfaces, strong brand-colour bands and direct content hierarchy inform this iteration. Reference photography, identity and copy are not reused. The earlier oversized serif/editorial direction is superseded.
 
-## Visual system
-- Warm white `#FAF9F5`: open reading space; paper `#FFFFFF`: forms and mockups.
-- Forest `#173E35`: brand, large headings and the main conversion panel.
-- Evergreen `#24624E`: links and selected controls.
-- Mist `#E9EDE6`: quieter section backgrounds; ink `#20372F`; muted `#59665D`.
-- Geist locally hosted: confident large 650-weight display, 400-weight readable body. Serif stays inside fictional client concepts, not ManaCircle's identity.
-- Hero: a full-width, two-line typographic statement followed by a large asymmetric visual composition. Terra cafe identity photograph beside an actual HTML website mockup; explicit concept disclosure. Avoid the previous narrow split hero with small overlapping cards.
-- Services: an open index grouped by customer task with all ten crawlable destinations. Alternate light surfaces with one dark forest section, not ten identical cards.
-- Work: larger photographic project covers with detailed interactive concept studies underneath.
-- About: eight-person fact, scope and working process; illustrative workspace imagery with an honest caption.
-- Guides: practical project checklists and comparisons, with direct answers and links to the relevant services.
-- Motion: only interactive state feedback; no autoplay, marquees or repeated scroll reveals.
+## Visual and content decisions
 
-## Content and discovery
-Keep existing service URLs. Use descriptive service H1s and metadata, specific deliverables, suitability, limitations and relevant related links. Add useful project-planning guides that answer actual brief questions. Add factual Organization, WebSite, Service and BreadcrumbList JSON-LD without invented addresses, reviews or prices. Local preview stays noindex; production URL and indexing require launch configuration.
+- Keep the owner-selected Eightfold symbol and original lowercase `manacircle.` lockup everywhere.
+- Use locally served Geist for headings, content and controls. Forest green, pale sage and warm white give the whole website a consistent identity.
+- Lead with “Branding & websites. Made to connect.” and a direct explanation of the studio's services. An original HTML/CSS brand presentation combines Eightfold stationery, a concept browser and licensed workspace photography; it is visibly labelled illustrative.
+- Put services directly after the opening. Three compact rows group all ten offers into Websites & apps, Brand & content, and Marketing & ads. Category links move to the relevant row.
+- Keep the owner's preferred service illustrations and their AI-generated disclosure. Actual project previews belong on Our work, not Home.
+- Give Telugu content a substantive, compact feature. Worldwide work and Telugu audiences in Andhra Pradesh, Telangana and overseas communities remain explicit.
+- Combine the team introduction with four native process disclosures. Remove the repeated oversized studio statement. FAQs, practical guides and one closing enquiry link support the next step.
+- Apply matching typography, spacing, navigation, service cards and footer to the catalogue, detail pages, About, Contact and Guides. Service-page headings name the actual service.
 
-## Facts and limits
-User-supplied: eight people, all-India service, English/Telugu content, ten services, custom quotations. Unknown: contact details, final domain, real portfolio and prices. All showcased projects are self-initiated fictional concepts. Illustrations are AI-generated, never presented as a real office or client photography. No guaranteed rankings, AI citations, leads or sales.
+## Interaction and accessibility
 
-## Review
-The previous design repeated the same tea visual and vague next-chapter copy. This version uses larger subject-specific images, clearer service names, a distinctive bold headline and decision support throughout. Preserve the functioning enquiry/download flow. Validate mobile, keyboard controls, contrast, links, structured data and production build before handover.
+The illustrative hero has a one-time 700ms arrival; selected sections have a one-time 500ms movement. No looping decoration, autoplay or scroll capture. Reduced-motion preferences remove optional movement. Main content remains visible without JavaScript; process and FAQ disclosures are native HTML.
+
+Mobile uses a single-column hero and service rows. Existing navigation, portfolio controls, service links and local project-brief download must remain usable. The preview continues to explain that a downloaded brief has not been sent.
+
+## Acceptance and evidence
+
+- Eightfold remains the only ManaCircle identity; homepage contains no client-project gallery.
+- All ten services are reachable, with direct category navigation and clear service headings.
+- No invented team photography, client outcomes, reviews, prices or response times.
+- Readable layouts without horizontal overflow at 320, 390, 768, 1024 and 1440 CSS pixels.
+- Verify loaded images, header/menu behavior, category anchors, native disclosures, reduced motion, no-JavaScript content and social preview.
+- Run type checking, production build, enquiry tests, the existing 32-route browser suite and rendered metadata/link checks. Record actual results in [validation](REWORK-VALIDATION.md).
+
+Implementation is local on `design/clear-premium-studio`. Public deployment, live enquiry delivery and indexing configuration remain separate launch work.

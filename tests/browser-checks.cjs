@@ -7,7 +7,7 @@ async (page, options = {}) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.setViewportSize({ width: 1440, height: 1000 });
-  const routes = ['/', '/services', '/services/logo-branding', '/services/qr-digital-menus', '/services/telugu-content-voiceovers', '/services/website-design', '/services/website-improvement', '/services/android-app-development', '/services/meta-ads', '/services/digital-marketing', '/services/instagram-content', '/services/content-writing', '/work', '/work?page=2', '/work/abacus-experts', '/work/public-speaking', '/work/chess-learning', '/work/exam-preparation', '/work/voice-agent', '/work/nila', '/work/slow-social', '/work/studio-form', '/work/words-in-motion', '/about', '/contact', '/privacy', '/guides', '/guides/business-website-brief', '/guides/qr-menu-vs-pdf', '/guides/instagram-reel-brief'];
+  const routes = ['/', '/services', '/services/logo-branding', '/services/qr-digital-menus', '/services/telugu-content-voiceovers', '/services/website-design', '/services/website-improvement', '/services/android-app-development', '/services/meta-ads', '/services/digital-marketing', '/services/instagram-content', '/services/content-writing', '/work', '/work?page=2', '/work/abacus-experts', '/work/public-speaking', '/work/chess-learning', '/work/exam-preparation', '/work/voice-agent', '/work/nila', '/work/slow-social', '/work/studio-form', '/work/words-in-motion', '/about', '/contact', '/privacy', '/guides', '/guides/business-website-brief', '/guides/qr-menu-vs-pdf', '/guides/instagram-reel-brief', '/guides/website-project-costs', '/guides/telugu-marketing-brief'];
   for (const route of routes) {
     const response = await page.goto(origin + route);
     await page.locator('h1').waitFor();
@@ -24,10 +24,14 @@ async (page, options = {}) => {
   await page.goto(origin);
   assert(await page.locator('.image-hero-photo').isVisible(), 'Homepage hero image must render');
   assert(await page.locator('.home-service-links a').count() === 10, 'All ten services must be discoverable');
-  assert(await page.locator('.home-portfolio .portfolio-card').count() === 4, 'Homepage must stay limited to four featured projects');
+  assert(await page.locator('main a[href^="/work/"]').count() === 0, 'Homepage must not include project previews');
+  assert(await page.locator('.home-process-list details[open]').count() === 1, 'First process step should be available initially');
+  await page.getByText('Agree the scope', { exact:true }).click();
+  await page.locator('.home-process-list details[open]').filter({hasText:'Agree the scope'}).waitFor();
+  assert(await page.locator('.home-process-list details[open]').count() === 1, 'Process disclosure should keep one step open');
   await page.getByRole('link', { name: 'Read our project guides' }).click();
   await page.waitForURL('**/guides');
-  assert(await page.locator('.guide-card').count() === 3, 'All project guides must be discoverable');
+  assert(await page.locator('.guide-card').count() === 5, 'All project guides must be discoverable');
   await page.goto(origin + '/work');
   const portfolio = page.locator('.portfolio-section');
   assert(await portfolio.locator('.portfolio-card').count() === 4, 'Our work must show four team projects');
@@ -69,11 +73,14 @@ async (page, options = {}) => {
   assert(await page.locator('a[href*="github.com"]').count() === 0, 'Portfolio must not expose repository links');
   await page.goto(origin + '/work/studio-form');
   await page.getByRole('button', { name: 'Before concept', exact: true }).click();
+  await page.locator('.before-art').waitFor();
   assert(await page.locator('.before-art').count() === 1, 'Before toggle must change the layout');
   await page.getByRole('button', { name: 'Improved concept', exact: true }).click();
+  await page.locator('.before-art').waitFor({ state: 'detached' });
   assert(await page.locator('.before-art').count() === 0, 'After toggle must change the layout');
   await page.goto(origin + '/work/words-in-motion');
   await page.getByRole('button', { name: /Telugu/ }).click();
+  await page.locator('.script-beat p[lang="te"]').first().waitFor();
   assert(await page.locator('.script-beat p[lang="te"]').count() === 3, 'Telugu script must be available');
   await page.goto(origin + '/work/slow-social');
   await page.locator('video').evaluate(async video => { await video.play(); });

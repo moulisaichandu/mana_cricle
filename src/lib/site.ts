@@ -1,6 +1,6 @@
 export const site = {
   name: "ManaCircle",
-  description: "Brand identity, websites, Android apps, QR menus, Meta Ads and English/Telugu content for businesses across India. An independent team of eight, with a custom scope for every project.",
+  description: "ManaCircle creates brand identities, websites, Android apps and content for businesses worldwide, with Telugu-first digital marketing and an eight-person team.",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://127.0.0.1:3000").replace(/\/+$/, ""),
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
   whatsapp: (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "").replace(/\D/g, ""),

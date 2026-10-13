@@ -1,3 +1,5 @@
+import { BrandLockup, BrandSymbol } from "./brand";
+
 const paths: Record<string, React.ReactNode> = {
   brand: <><path d="m12 3 9 9-9 9-9-9 9-9Z" /><circle cx="12" cy="12" r="4" /></>,
   qr: <><rect x="3" y="3" width="6" height="6" rx="1" /><rect x="15" y="3" width="6" height="6" rx="1" /><rect x="3" y="15" width="6" height="6" rx="1" /><path d="M15 15h3v3h3M15 21h3M21 12v3M12 3v3M3 12h6M12 12h3M12 18v3" /></>,
@@ -26,8 +28,8 @@ export function Icon({ name, size = 20, className = "" }: { name: string; size?:
   return <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name] || paths.arrow}</svg>;
 }
 export function BrandMark({ className = "" }: { className?: string }) {
-  return <svg className={className} width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="24" fill="currentColor" /><path d="M12 32V21a6 6 0 0 1 12 0v11m0-11a6 6 0 0 1 12 0v11" stroke="var(--brand-mark-detail, #faf9f5)" strokeWidth="3.2" strokeLinecap="round" /></svg>;
+  return <BrandSymbol className={className} />;
 }
 export function BrandIdentity() {
-  return <><BrandMark /><span className="brand-type"><span className="brand-name">mana<span>circle</span></span><span className="brand-descriptor">Creative &amp; digital</span></span></>;
+  return <BrandLockup />;
 }

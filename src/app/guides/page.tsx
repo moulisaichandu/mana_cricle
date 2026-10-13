@@ -2,7 +2,7 @@ import { GuideCards } from "@/components/guide-cards";
 import { ContactBanner, SectionLabel } from "@/components/shared";
 import { StructuredData } from "@/components/structured-data";
 import { breadcrumbs, pageMetadata } from "@/lib/seo";
-export const metadata = pageMetadata("Project Guides for Websites, QR Menus & Reels", "Practical planning guides from ManaCircle: prepare a website brief, choose a QR menu format and plan English or Telugu Instagram reels.", "/guides");
+export const metadata = pageMetadata("Guides for Websites, Budgets & Telugu Marketing", "Prepare a website brief, compare project quotes, choose a digital menu and plan Telugu campaigns. Practical guides for business owners from ManaCircle.", "/guides");
 export default function GuidesPage() {
-  return <><StructuredData data={breadcrumbs([{name:"Home",path:"/"},{name:"Project guides",path:"/guides"}])} /><section className="page-intro container"><SectionLabel>Project guides</SectionLabel><h1>Better questions.<br />Better starting points.</h1><p>Practical notes for business owners planning a website, a digital menu or their next reel. Know what to prepare and what to include in the scope.</p></section><section className="container section" style={{paddingTop:0}}><GuideCards /></section><ContactBanner /></>;
+  return <><StructuredData data={breadcrumbs([{name:"Home",path:"/"},{name:"Project guides",path:"/guides"}])} /><section className="page-intro container"><SectionLabel>Project guides</SectionLabel><h1>Plan your website,<br />content or campaign.</h1><p>Practical answers about project briefs, website costs, digital menus and Telugu marketing. Use these guides to prepare and compare your options.</p></section><section className="container section" style={{paddingTop:0}}><GuideCards /></section><ContactBanner /></>;
 }

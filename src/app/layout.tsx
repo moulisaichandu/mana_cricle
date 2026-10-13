@@ -11,18 +11,19 @@ import "./globals.css";
 import "./studio.css";
 import "./photography.css";
 import "./header.css";
+import "./refinement.css";
 
 const studioFont = localFont({ src: "../../public/fonts/geist-latin.woff2", variable: "--font-studio", display: "swap", weight: "100 900" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: { default: "ManaCircle — Branding, Websites & Digital Marketing", template: "%s | ManaCircle" },
+  title: { default: "ManaCircle — Web Design, Branding & Telugu Marketing", template: "%s | ManaCircle" },
   description: site.description,
-  openGraph: { type: "website", siteName: site.name, title: "ManaCircle — Brands with character. Websites with purpose.", description: site.description, images: [{ url: "/opengraph-image", width: 1200, height: 630 }] },
+  openGraph: { type: "website", siteName: site.name, title: "ManaCircle — Branding & websites. Made to connect.", description: site.description, images: [{ url: "/opengraph-image", width: 1200, height: 630 }] },
   twitter: { card: "summary_large_image" },
   robots: { index: indexable, follow: indexable },
 };
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#FAF9F5" };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#f9f9f4" };
 
 const headerServiceGroups = serviceFamilies.map(group => ({
   id: group.id, title: group.title, icon: group.icon,

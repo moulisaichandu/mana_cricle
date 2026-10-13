@@ -1,55 +1,52 @@
-# Rework validation — 8 October 2026
+# Rework validation — 13 October 2026
 
-Current preview: [http://127.0.0.1:3100](http://127.0.0.1:3100). Next.js production server, bound to loopback. The redesign is local; it has not been deployed publicly.
+Development: [127.0.0.1:3000](http://127.0.0.1:3000). Production preview: [127.0.0.1:3100](http://127.0.0.1:3100). Both bind to loopback. Changes are local on `design/clear-premium-studio`; no commit, push or deployment was performed for this iteration.
 
-## Passed
+## Current result
 
-- Standalone TypeScript check.
-- All 15 existing enquiry validation/receiver tests.
-- Final production build, including all ten service pages and the three new guide pages.
-- Production HTTP audit of **24 content routes** and **24 internal destinations**.
-- Every audited page returns 200, has one H1, a distinct title and description, the appropriate canonical path, and preview noindex metadata.
-- JSON-LD parses successfully. Organization and WebSite are present; each service identifies its provider and India service area, with the same description present in visible page text. Service and guide breadcrumb destinations match their pages.
-- All service pages expose a contact link carrying the correct service slug.
-- Four unknown paths return 404, including unknown service, guide and concept slugs.
-- Preview robots disallow indexing; the preview sitemap is intentionally empty.
-- Social-sharing image returns a PNG successfully.
-- New local WebP assets return 200.
-- Read-only browser navigation and screenshots inspected the homepage, selected work, branding service, QR menu service, About, website-planning guide and production contact page.
-- Available browser console checks on inspected routes reported no warnings or errors.
-- Production contact snapshot confirms Telugu service preselection and the clearly stated local-download flow.
+The owner's Patnam Pakodi reference informed a clearer sans-serif direction with strong brand-colour sections. The homepage now leads with “Branding & websites. Made to connect.” and an original Eightfold brand presentation. Compact service rows, category anchors, Telugu content, team/process disclosures, FAQs and one closing CTA replace the repeated editorial sections. At 1440px, measured homepage height fell from 7,174px to 4,439px; the service section starts at approximately 774px.
 
-Automated route evidence: `.artifacts/rework-route-audit.json`.
-Reproduce: `node scripts/check-rendered-site.cjs`; override `TEST_BASE_URL` if needed.
+Shared typography, spacing, header, footer, catalogue cards, detail-page introductions, About, Contact and Guides use the same sage/forest system. The approved Eightfold logo, ten original service illustrations, established routes, actual portfolio and local brief-download behavior remain. The social image now matches the sans-serif heading. No new dependencies were added.
 
-## Visual corrections from inspection
+## Passed checks
 
-- Removed dark headline text placed over the Studio Form photo to preserve readability.
-- Fixed the active contact-navigation button text colour after the production screenshot revealed it blended into the background.
-- Refined form heading sizes and shortened the About headline after screenshot review.
-- Aligned the favicon and structured-data logo with the two-circle header mark.
-- Adjusted the smallest hero typography for narrow screens.
-- Extended collapsed navigation through 700px to avoid crowding after adding Guides.
-- Replaced the earlier hero layout and its tab interaction with the new photographic composition.
-- Kept dimensions reserved for images and lazy loading below the fold; a full-page screenshot taken without scrolling can show unloaded lower images. A subsequent section navigation verified the work image loads.
+| Check | Result |
+| --- | --- |
+| `npm.cmd run typecheck` | Exit 0 |
+| `npm.cmd test` | Exit 0; 15/15 enquiry validation and receiver tests |
+| `npm.cmd run build` | Exit 0; production compilation, TypeScript, static generation and social image |
+| `npm.cmd run test:e2e`, `TEST_BASE_URL=http://127.0.0.1:3100` | Exit 0; 32 route variants, no reported main-content axe violations, all interactions passed, no runtime errors |
+| `node scripts/check-rendered-site.cjs` on port 3100 | Exit 0; 32 content routes, 27 internal destinations, 12 expected 404 routes/assets, metadata and image checks |
+| Additional production visual review | Exit 0; 12 page/viewport combinations, loaded images, no whole-document axe violations or horizontal overflow |
+| Additional interaction review | Exit 0; homepage/catalogue anchors, keyboard process/menu, reduced motion and no-JavaScript content |
+| `git diff --check` | Exit 0; Windows line-ending notices only |
 
-Screenshots are in `.playwright-mcp/rework-*.png`. The browser viewport available in this session was 1280 × 720. A filename containing “desktop” does not imply a separate 1440px verification.
+The browser suite uses installed Microsoft Edge through Playwright. It exercises service/guide discovery, absence of homepage project previews, portfolio pagination and return navigation, before/after controls, Telugu script switching, captioned video playback, service-specific enquiry links, invalid/collapsed form fields, actual brief download, absence of form submission/storage in local mode, mobile menu and Escape behavior. Responsive checks cover 320, 390, 768 and 1440px.
 
-## Not verified in this environment
+Whole-document axe and image/layout review covers Home, Services, website-design, About and Contact at 1440px and 390px, plus Home at 320px and 768px. Separate checks confirm edge-aligned header layout without logo/menu overlap at 901, 1024 and 1440px. Desktop services open by keyboard; Escape closes the panel and restores focus. Homepage and catalogue category destinations remain below the sticky header.
 
-The full Playwright/axe/responsive/interaction suite could not run on the redesign. Local Edge launch returned `spawn EPERM`. Automatic approval review rejected Playwright code execution, evaluation, resize and click tools because the current approval policy is “never”. Read-only navigation, snapshots, screenshots and console inspection were available.
+Reduced-motion preferences remove hero and section movement. With JavaScript disabled, the homepage heading and all ten service links remain available and native process disclosures work. The 1200 × 630 social image was visually inspected.
 
-The suite in `tests/browser-checks.cjs` has been updated for 24 pages and the new service/guide discovery flow. Run it on an environment with browser-control permission:
+The rendered-site check verifies unique titles/descriptions, one H1, canonical paths, JSON-LD, visible service descriptions, worldwide provider relationships, guide authorship/dates, breadcrumb targets, preview indexing controls, internal links and local image responses. Retired logo alternatives and `/brand-preview` return 404.
 
-```powershell
-$env:TEST_BASE_URL='http://127.0.0.1:3100'
-npm run test:e2e
-```
+## Verification correction
 
-Do not reuse earlier-version zero-violation or mobile-width results as evidence for this rework. Mobile browser execution, keyboard/form interactions and axe results remain unverified for the current design. Existing unit tests still cover form validation and receiver semantics.
+The first whole-document scan found insufficient contrast in the decorative concept browser's small label. Its text colour was darkened from `#61725f` to `#4c604c`. The subsequent production scan passed at all inspected widths.
 
-Safari, Firefox, physical devices, assistive technology, live enquiry delivery and deployed performance remain unverified. No search ranking, traffic or external AI-answer citation measurements exist for this local site.
+## Evidence
 
-## Launch inputs still needed
+- `.artifacts/browser-results.json`: complete 32-route and interaction results.
+- `.artifacts/rework-route-audit.json`: production HTTP/metadata/link results.
+- `.artifacts/redesign-20261013/visual-audit.json`: production whole-document accessibility, dimensions and runtime results.
+- `.artifacts/redesign-20261013/interaction-audit.json`: category anchors, desktop menu, keyboard process, reduced motion and no-JavaScript checks.
+- `.artifacts/redesign-20261013/{home,services,website,about,contact}-{1440,390}-{top,full}.png`: initial viewport and scrolled, fully loaded captures.
+- `.artifacts/redesign-20261013/home-{320,768}-{top,full}.png`: smaller homepage widths.
+- `.artifacts/redesign-20261013/social-preview.png`: generated sharing image.
 
-The final public domain, actual email/WhatsApp, enquiry delivery destination and production privacy details are not supplied. The form downloads a brief and does not send it to the team. Configure and verify these before enabling live lead capture and public indexing. See [SEO and launch notes](SEO-CONTENT-STRATEGY.md).
+Evidence is local and ignored by Git. The repository's `.workflow/wf.ps1` runner is not configured; package scripts and existing HTTP/browser checks were used directly. PowerShell blocks `npm.ps1` in this environment, so commands use `npm.cmd` without changing system execution policy.
+
+## Limits and launch inputs
+
+Automated axe results are not a complete accessibility certification. Safari, Firefox, physical devices, assistive technology and deployed performance were not tested. No Lighthouse score, field Core Web Vitals, ranking, traffic or AI-citation result is claimed. The unit runner emits its existing module-type warning; all tests pass.
+
+The public domain, confirmed contact details and enquiry receiver remain launch inputs. The form currently downloads an unsent project brief to the visitor's device. Indexing is intentionally disabled in this preview. No live receiver, analytics or cloud service was provisioned or contacted.

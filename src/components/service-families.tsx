@@ -2,8 +2,8 @@ import Link from "next/link";
 import { services } from "@/lib/content";
 import { Icon } from "./icon";
 export const serviceFamilies = [
-  { id: "build", title: "Websites & apps", description: "", icon: "window", slugs: ["website-design", "website-improvement", "android-app-development", "qr-digital-menus"] },
-  { id: "grow", title: "Marketing & ads", description: "Connect your offer, creative and landing page with a focused campaign plan.", icon: "target", slugs: ["digital-marketing", "meta-ads"] },
+  { id: "build", title: "Websites & apps", description: "Clear websites, useful apps and digital experiences built around a real customer task.", icon: "window", slugs: ["website-design", "website-improvement", "android-app-development", "qr-digital-menus"] },
+  { id: "grow", title: "Marketing & ads", description: "A clear offer, the right language and a connected campaign. Telugu audiences come first in regional marketing.", icon: "target", slugs: ["digital-marketing", "meta-ads"] },
   { id: "create", title: "Brand & content", description: "Give your business a recognisable identity and a voice people understand.", icon: "pen", slugs: ["logo-branding", "instagram-content", "content-writing", "telugu-content-voiceovers"] },
 ];
 export function ServiceFamilies() {

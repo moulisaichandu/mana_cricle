@@ -1,14 +1,14 @@
 # ManaCircle implementation and handover
 
-Updated: 8 October 2026.
+Updated: 13 October 2026.
 
 ## Current rework — supersedes the earlier visual version
 
-The client rejected the previous generic presentation and vague offer. The owner selected warm white and deep green with a bold modern agency direction. Home, the service catalogue, all ten service pages, work covers, About, Contact and shared navigation/footer have been reworked. The tabbed hero has been replaced by large typography and photographic concept work. About now uses a clearly illustrative workspace image.
+The latest local redesign uses the owner-supplied Patnam Pakodi reference for clear hierarchy, bold sans-serif type and strong brand-colour sections. Home now has an original Eightfold brand presentation, compact service rows, Telugu feature and combined team/process content. Shared styles align the catalogue, service details, About, Contact and Guides. The oversized serif exploration is superseded. The approved Eightfold mark and original service illustrations remain.
 
-The current application also includes a guides index and three detailed project guides, giving 24 public content routes. Service content adds suitability, specific examples and clearer scope/FAQs. Organization, WebSite, Service and breadcrumb structured data use the confirmed business facts. Public indexing remains disabled in this local preview.
+The application includes ten detailed services, five practical guides, five actual team projects and four earlier labelled concepts. Project previews live on Our work. The browser suite covers 32 route variants. Service and guide metadata, Organization/WebSite/Service/Article entities and breadcrumbs use visible content and confirmed facts. The audience is worldwide, with Telugu marketing priority. Public indexing remains disabled and the unconfigured contact form downloads an unsent brief locally.
 
-Read [the rework brief](REWORK-BRIEF.md), [SEO/content strategy with sources](SEO-CONTENT-STRATEGY.md) and [current validation](REWORK-VALIDATION.md). Historical automated browser/accessibility results below apply to earlier versions. They are not a pass certificate for the rework; browser interaction tools were blocked during this turn.
+Read [the rework brief](REWORK-BRIEF.md), [SEO/content strategy with sources](SEO-CONTENT-STRATEGY.md) and [current validation](REWORK-VALIDATION.md). The remaining sections retain earlier implementation history; their scope and check counts do not override the current brief or latest validation record. Changes remain local on `design/clear-premium-studio`.
 
 ## Confirmed direction
 

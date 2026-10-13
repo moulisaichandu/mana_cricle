@@ -1,5 +1,7 @@
 # ManaCircle visual refinement
 
+> Current direction — 13 October 2026: the owner-supplied Patnam Pakodi reference informed a clearer bold-sans design with compact service rows, a native Eightfold brand presentation and sage/forest section contrast. This supersedes both the early design below and the later serif exploration. See [current brief](REWORK-BRIEF.md) and [verification](REWORK-VALIDATION.md). The remaining text is the historical decision record.
+
 Direction confirmed: refine the existing cream and green identity.
 
 The visitor needs to understand the team’s services, judge its creative approach and prepare a relevant enquiry. Success is a clear path from a service or concept to an accurately preselected project brief.

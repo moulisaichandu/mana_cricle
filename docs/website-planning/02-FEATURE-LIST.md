@@ -1,6 +1,6 @@
 # Freelance Services Website — Feature List
 
-> Current implementation update — 6 October 2026: the preview now uses ManaCircle, the approved cream/green refinement and ten services. Android apps, Meta Ads, logo/brand identity, QR menus and Telugu content/voiceovers extend the original scope below. See [current service catalogue](../SERVICE-CATALOGUE.md), [visual refinement](../DESIGN-REFINEMENT.md) and [implementation status](../IMPLEMENTATION.md). Contact details remain unconfigured; the project brief downloads locally. The original research is retained as the decision record.
+> Current implementation update — 13 October 2026: the preview uses the final Eightfold identity, ten services and five guides, with worldwide positioning and Telugu marketing priority. The current redesign follows the owner's Patnam Pakodi reference for readable type, direct service discovery and strong green section contrast. Actual project previews live on Our work. See [current brief](../REWORK-BRIEF.md), [service catalogue](../SERVICE-CATALOGUE.md) and [implementation status](../IMPLEMENTATION.md). Contact details remain unconfigured; the project brief downloads locally. The original research below is retained as a historical decision record.
 
 Version: 0.1 — planning draft, 6 October 2026  
 Audience: businesses across India, including Andhra Pradesh and Telangana  

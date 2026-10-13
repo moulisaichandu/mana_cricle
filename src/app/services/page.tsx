@@ -9,11 +9,12 @@ import { serviceFamilies } from "@/components/service-families";
 import { ButtonLink, ContactBanner, Process, SectionLabel } from "@/components/shared";
 import { Icon } from "@/components/icon";
 
-export const metadata: Metadata = pageMetadata("Branding, Website, App & Marketing Services", "Explore ManaCircle’s ten services for businesses across India: brand identity, websites, Android apps, QR menus, Meta Ads, Instagram content and Telugu voiceovers.", "/services");
+export const metadata: Metadata = pageMetadata("Branding, Websites, Apps & Marketing Services", "Explore ManaCircle’s creative and digital services for businesses worldwide, including brand identity, websites and Telugu-first marketing campaigns.", "/services");
 
 export default function ServicesPage() {
   return <>
-    <h1 className="sr-only">ManaCircle services</h1>
+    <section className="page-intro container split-intro"><div><SectionLabel>Our services</SectionLabel><h1>Design. Development.<br />Content &amp; marketing.</h1></div><p>Find the service your business needs. Explore the deliverables, what we need from you and how each project is scoped.</p></section>
+    <nav className="container service-category-nav" aria-label="Browse service categories">{serviceFamilies.map(family => <a key={family.id} href={`#${family.id}`}>{family.title}<Icon name="arrow" size={16} /></a>)}</nav>
     <div className="container service-catalogue">
       {serviceFamilies.map(family => <section className="catalogue-family" id={family.id} key={family.id} aria-label={family.title + " services"}>
         <div className="catalogue-family-intro"><p>{family.title}</p>{family.description && <span>{family.description}</span>}</div>

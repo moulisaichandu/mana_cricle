@@ -1,109 +1,74 @@
 # ManaCircle search and AI discovery content
 
-Research and implementation date: 8 October 2026. Market: India. Website language: English. Service content: English and Telugu. This is a local preview, not a live ranking or traffic audit.
+Updated 13 October 2026. Audience: businesses worldwide, with Telugu audiences a first priority for digital marketing in Andhra Pradesh, Telangana and overseas Telugu communities. Website language: English, with relevant Telugu passages marked `lang="te"`. Service languages: English and Telugu. This is a local implementation, not a live ranking or traffic audit.
 
-## The decision
+## Content direction
 
-Make the offer easier to evaluate. Each service now explains what ManaCircle does, who it suits, possible deliverables, client inputs, separate costs, a practical example and relevant questions. Three project guides answer planning questions before a customer asks for a quotation. Existing service URLs are retained.
+The homepage leads with “Branding & websites. Made to connect.” and direct supporting copy about branding, digital experiences and Telugu-first marketing. Three compact service groups appear immediately after the opening, with category anchors and links to all ten services. The catalogue has matching category navigation, and each service-page H1 names the service. A substantive Telugu section and concise process/FAQ content support the buying journey. Project previews remain on Our work. The approved Eightfold identity appears across the website and social preview. The hero brand presentation, generated service illustrations, licensed stock photographs and actual projects are described according to their provenance.
 
-The homepage moves from the broad “Your business. Its next chapter.” to “Brands with character. Websites with purpose.” It immediately identifies the eight-person team and the actual services. Telugu content has a dedicated section and visible sample. Concept work remains clearly labelled.
+Each service explains the offer, fit, deliverables, client inputs, separate costs, a practical example and relevant questions. New summary panels explain where to start, how quotations are scoped and how remote collaboration works. Service introductions and metadata describe worldwide delivery without inventing overseas offices or local addresses.
 
-## Evidence and sources
+Five guides answer concrete buying and preparation questions. New quotation and Telugu-marketing guides cover scope, recurring costs, ownership, language, local context, destination pages and measurement. Answers remain visible in server-rendered HTML; there is no keyword-only or hidden AI-targeted text.
 
-Google says normal SEO foundations apply to its AI features: accessible pages, useful visible text, internal links and structured data consistent with the page. There is no special AI schema or text-file prerequisite, and eligibility does not guarantee inclusion. This implementation follows those foundations. [Google AI features](https://developers.google.com/search/docs/appearance/ai-features).
+## Search intent and URL map
 
-Google’s content guidance prioritises useful material for the intended audience. It does not prescribe a target word count and warns against fabricated creator identities. The guides use original project-planning explanations and explicitly fictional examples, without invented credentials or results. [Helpful content guidance](https://developers.google.com/search/docs/fundamentals/creating-helpful-content).
+These are editorial query families, not measured search volumes, rankings or difficulty scores. Existing service URLs are retained. No duplicate city pages were created.
 
-Organization markup can clarify business identity; WebSite markup identifies the site name. Only known facts are included. No address, telephone number, reviews or prices are invented. Service markup describes the actual offer; it does not promise a Google rich result. [Organization guidance](https://developers.google.com/search/docs/appearance/structured-data/organization), [Site names](https://developers.google.com/search/docs/appearance/site-names).
+| URL | Visitor question / intent |
+| --- | --- |
+| `/` | Who is ManaCircle, what does the team do, and can we work together remotely? |
+| `/services` | Which creative, web, app or marketing service fits my business? |
+| `/services/website-design` | What is included in a business website project? |
+| `/services/website-improvement` | Can my current website be improved without a full rebuild? |
+| `/services/android-app-development` | How do screens, backend work and Android release responsibilities fit together? |
+| `/services/logo-branding` | What do I receive beyond a logo image? |
+| `/services/qr-digital-menus` | What is a mobile menu, and are ordering or payments included? |
+| `/services/digital-marketing` | How are audience, message, channels and measurement planned? |
+| `/services/meta-ads` | What is included in Facebook/Instagram campaign work, separate from ad spend? |
+| `/services/instagram-content` | Who provides footage, scripts, edits and publishing? |
+| `/services/content-writing` | How are English and Telugu scripts written for an actual format? |
+| `/services/telugu-content-voiceovers` | How are Telugu scripts, adaptation, voiceovers and subtitles scoped? |
+| `/guides/business-website-brief` | What information should I put in a website brief? |
+| `/guides/website-project-costs` | What should a website quotation include, including recurring costs and handover? |
+| `/guides/qr-menu-vs-pdf` | Should a restaurant use a PDF or web-based QR menu? |
+| `/guides/instagram-reel-brief` | What should I send an editor for an English or Telugu reel? |
+| `/guides/telugu-marketing-brief` | How should a Telugu campaign brief define audience, offer, language and measurement? |
+| `/work`, `/work/[slug]` | What has this team built, and what can I inspect? |
+| `/about`, `/contact` | Who is behind the work and how do I prepare a project enquiry? |
 
-The newer generative-search guide also explains the continuing role of SEO. Nothing here claims to influence model training or guarantee a citation. [Google’s generative-search guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide).
+## Evidence and implementation
 
-## Search-intent sampling
+Google's [AI features guidance](https://developers.google.com/search/docs/appearance/ai-features) says the usual SEO foundations apply: crawlable pages, helpful visible text and structured data consistent with the page. No special AI schema or text-file prerequisite was introduced. Eligibility does not guarantee inclusion. The implementation also follows the clarity and useful-content principles in [Bing's webmaster guidance](https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a).
 
-Public searches covered branding/website services in India, Telugu scripts/voiceovers/subtitles and restaurant QR menus. This is a qualitative sample, not a verified Google rank report. Search order, search volume, difficulty, traffic and conversion data were not measured.
+Implemented foundations:
 
-| Primary source inspected | Observation | Decision for ManaCircle |
-| --- | --- | --- |
-| [Sam Branding Agency services](https://sambrandingagency.com/services/) | Groups identity, websites and marketing with named deliverables. Its credentials are self-reported and were not verified. | Explain service categories and handover details; do not borrow proof or performance claims. |
-| [Menumine](https://www.menumine.in/) | Describes mobile menu browsing, updates and additional restaurant functions. Its product claims are its own. | Explicitly distinguish a browsing menu from ordering, payments and integrations. Add a PDF-versus-web-menu planning guide. |
-| [BOL Media Telugu localisation](https://bolmedia.in/telugu-localisation-services) | Search excerpt names script adaptation, voiceover and subtitles. Direct page fetch timed out; full content unverified. | Treat these as separate production deliverables because the user independently confirmed them. Do not infer recording credentials or a voice roster. |
+- Unique titles and descriptions, one H1 per audited page and canonical URLs.
+- Crawlable links connecting catalogue, service pages, guides, portfolio and contact.
+- Consistent Organization and WebSite entities, with the final Eightfold logo.
+- Service schema with the actual visible introduction, linked provider and worldwide service area.
+- Article schema with ManaCircle authorship and a visible review date; matching breadcrumbs on guides and services.
+- Local WebP photography, reserved image space, responsive sizes and below-fold lazy loading.
+- Useful content without JavaScript; motion is optional and respects reduced-motion preferences.
+- Preview noindex, disallow robots and an empty preview sitemap remain intentional. The production configuration populates the sitemap only when public indexing is enabled.
 
-The opportunity is clearer scope and more useful decision support, not an unsupported claim that competitors lack those things. ManaCircle’s supplied differentiators are a team of eight, integrated creative/digital work, English/Telugu content and custom quotations.
+No FAQ rich-result eligibility, special AI ranking factor or citation guarantee is claimed. There are no separate translated English/Telugu page pairs, so no unsupported hreflang alternates are asserted.
 
-## Proposed intent-to-URL map
+## Claim boundaries
 
-These are editorial query targets, not measured keywords. Each main service keeps one authoritative URL. No mass city pages or duplicate keyword pages were created.
+| Statement | Basis and treatment |
+| --- | --- |
+| Team of eight, ten services, worldwide audience and Telugu marketing priority | Owner-supplied scope, reflected in visible copy and entity data |
+| Portfolio work | Owner-supplied project evidence; linked to actual website previews where provided |
+| Pricing, timelines and revisions | Determined by a written scope; no fabricated packages, rates or guarantees |
+| Real photos | Licensed editorial stock with source credits; not identified as team premises or equipment |
+| Older concept projects | Explicitly fictional; retained at existing URLs |
+| Sales, search rankings, traffic and AI citations | Unmeasured; no claimed results |
+| Public domain and business contacts | Not yet supplied; remain configurable rather than invented |
 
-| URL | Primary task / proposed query family | Distinct answer |
-| --- | --- | --- |
-| `/` | Branding, website and content team in India | Who ManaCircle is, what it offers and where to begin |
-| `/services` | Creative and digital services | All ten offers grouped by task |
-| `/services/logo-branding` | Logo design and brand identity | Logo, visual system, formats and agreed applications |
-| `/services/website-design` | Business website design and development | New website pages, responsive design, enquiries and launch scope |
-| `/services/website-improvement` | Improve or redesign an existing website | Review, prioritised fixes, content and enquiry journey |
-| `/services/android-app-development` | Android app development for business | Screens, user journeys, backend boundaries and release scope |
-| `/services/qr-digital-menus` | QR menus for restaurants and cafés | Browsing menu, stable link, updates and separate ordering features |
-| `/services/digital-marketing` | Digital marketing support | Audience, offer, channel selection and measurement plan |
-| `/services/meta-ads` | Facebook and Instagram ads management | Campaign scope, creative, account access and separate ad spend |
-| `/services/instagram-content` | Instagram post design and reel editing | Client footage, editing, scripts, covers and optional posting |
-| `/services/content-writing` | English and Telugu video scripts | Writing, hooks, visual notes and revision scope |
-| `/services/telugu-content-voiceovers` | Telugu voiceovers, subtitles and regional creatives | Language adaptation, tone, recording and separate campaign work |
-| `/guides/business-website-brief` | What to include in a website brief | Goals, pages versus features, content, ownership and costs |
-| `/guides/qr-menu-vs-pdf` | QR menu versus PDF menu | Destination format, phone readability, updates and print checks |
-| `/guides/instagram-reel-brief` | How to brief an English or Telugu business reel | Message, footage, voice, subtitles, editing and publishing responsibilities |
+Qualitative searches informed question selection. This is not a measured competitor audit. Search Console, analytics and AI citation evidence are unavailable for this unpublished local site.
 
-Andhra Pradesh and Telangana appear where relevant to Telugu audiences and the supplied service area. No office in a particular city is claimed. The site is English, so no alternate-language hreflang pages are asserted. Telugu passages have language context; service language is distinct from page language.
+## Launch inputs and observation
 
-## Claim ledger
+Supply the verified HTTPS domain, public email/WhatsApp and enquiry receiver before activating live lead capture. The current form downloads a brief locally and explicitly says nothing was sent. Rebuild with the production domain; verify canonical, entity and social image URLs; then enable public indexing on that host.
 
-| Claim | Basis | Treatment |
-| --- | --- | --- |
-| ManaCircle, team of eight | User-supplied | Visible on Home and About |
-| All-India service, including AP and Telangana | User-supplied | Service-area copy; no invented local address |
-| Ten listed services | User-supplied | Catalogue, service pages, footer and enquiry selector |
-| English/Telugu scripts, Telugu voiceovers and subtitles | User-supplied | Specific scope and questions |
-| Client-supplied reels footage; posting as required | User-supplied | Explicit inclusion and exclusion |
-| Custom quotation after discussion | User-supplied | No fabricated packages, prices or turnaround promises |
-| Example projects and photographs | Created for this project | Fictional concepts and illustrative AI imagery |
-| Sales, traffic, rank or AI-citation improvements | Unmeasured | No guarantees or numerical claims |
-| Public contacts, domain and actual client proof | Unknown | Remain absent; launch inputs below |
-
-## Answer and entity checks implemented
-
-- Direct service introductions name the provider, offer and relevant audience.
-- Each service includes a suitability section, deliverables, inputs and scope limits.
-- Practical examples explain a possible scope without claiming a client outcome.
-- FAQs answer budget, access, ownership, publishing and language questions.
-- Guides contain self-contained answers and original, labelled examples.
-- Home, catalogue, footer, services and guides form crawlable internal-link paths.
-- Service FAQs remain readable HTML in native disclosures. No FAQ rich-result promise is made.
-- JSON-LD uses consistent Organization IDs, WebSite identity, Service provider relationships and breadcrumb destinations.
-- Titles, descriptions, canonicals and page-specific social metadata describe the actual page.
-- Hero images use local optimised WebP assets, reserved layout space and descriptive alt text.
-- Existing preview robots, noindex and empty sitemap behaviour remain intentional.
-
-## Proposed post-launch observation set
-
-No external AI-answer benchmark has been run. All citation visibility is currently **unverified**. Use a consistent market/language and record date, product, prompt, links actually cited and any factual errors. Keep failed observations separate; do not count a brand mention as a linked citation.
-
-Suggested unbranded prompts:
-
-1. What should a small business include in a website brief?
-2. Should a café use a PDF or a web-based QR menu?
-3. What should I send an editor for a Telugu Instagram reel?
-4. What is usually separate from Meta Ads management fees?
-5. Can I improve my existing business website without rebuilding it?
-
-A separate branded check can ask what ManaCircle offers and compare the answer with actual page facts. It measures factual interpretation, not natural recommendation preference.
-
-## Launch dependencies and measurement
-
-1. Supply the verified public HTTPS domain, email, WhatsApp number and real social profile if available.
-2. Configure the enquiry receiver and complete its delivery/privacy checks, or retain the clearly stated local-brief behaviour.
-3. Approve the content and concept disclosures. Add actual case studies and reviews only with permission and evidence.
-4. Rebuild with the final `NEXT_PUBLIC_SITE_URL`. Confirm page canonicals, JSON-LD URLs and social image URLs use that domain.
-5. After release checks, set `SITE_INDEXABLE=true` for the public build. Check robots, meta robots and populated sitemap from the live host.
-6. Verify ownership in Search Console, submit the sitemap and inspect representative pages. Monitor indexing, search queries, impressions, clicks and actual qualified enquiries.
-7. Repeat device, accessibility and performance checks on the deployed site. Field Core Web Vitals require real-world data; none are claimed here.
-
-The initial local preview is deliberately unavailable for public indexing. This is a launch configuration requirement, not an SEO defect to hide by enabling indexing during development. Ranking, traffic and AI-citation results remain unknown until observed after publication.
+After launch, inspect sitemap and indexing in Search Console. Measure queries, impressions, clicks and qualified enquiries. Evaluate mobile performance on the deployed host and separate local lab observations from field Core Web Vitals. AI-answer checks should record date, market, language, actual source links and factual errors; a brand mention alone is not a linked citation. No ranking or citation outcome is promised.

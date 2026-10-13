@@ -26,7 +26,7 @@ export default async function WorkPage({ searchParams }: WorkPageProps) {
   const start = (page - 1) * PORTFOLIO_PAGE_SIZE;
   const projects = portfolioProjects.slice(start, start + PORTFOLIO_PAGE_SIZE);
   return <>
-    <section className="page-intro container"><SectionLabel>Our work</SectionLabel><h1>Ideas, brought<br />to life.</h1><p>Learning platforms, interactive websites and voice automation built by our team. Explore the projects, see how they work and visit the live websites.</p></section>
+    <section className="page-intro container"><SectionLabel>Our work</SectionLabel><h1>Explore the work.<br />Try the experience.</h1><p>From a child’s first speaking exercise to a learning platform’s daily practice. These projects show the screens, workflows and details our team has built. Open an overview or visit an available live website.</p></section>
     <section className="container portfolio-section" id="projects" tabIndex={-1} aria-label="Projects from our team">
       <div className="portfolio-browse-bar"><p>{projects.length === 1 ? <>Showing project <strong>{start + 1}</strong> of {portfolioProjects.length}</> : <>Showing <strong>{start + 1}–{start + projects.length}</strong> of {portfolioProjects.length} projects</>}</p><PortfolioPagination page={page} totalPages={portfolioPageCount} position="top" /></div>
       <PortfolioGallery projects={projects} />

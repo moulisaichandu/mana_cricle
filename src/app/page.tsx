@@ -1,135 +1,82 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { PortfolioGallery } from "@/components/portfolio-gallery";
-import { ButtonLink, FAQ } from "@/components/shared";
-import { Icon } from "@/components/icon";
-import { services } from "@/lib/content";
-import { portfolioProjects } from "@/lib/portfolio";
+import { services, homeFaq } from "@/lib/content";
 import { pageMetadata } from "@/lib/seo";
+import { ContactBanner, FAQ, SectionLabel } from "@/components/shared";
+import { BrandLockup, BrandSymbol } from "@/components/brand";
+import { Icon } from "@/components/icon";
+import { Reveal } from "@/components/reveal";
 import "./home.css";
 
-export const metadata: Metadata = pageMetadata(
-  "Website Design, Branding & Digital Marketing in India",
-  "ManaCircle creates websites, Android apps, brand identities, Meta Ads and English/Telugu content. Explore our services and plan your project with our team of eight.",
+export const metadata = pageMetadata(
+  "Brand Identity, Websites & Telugu Digital Marketing",
+  "ManaCircle creates brand identities, websites, Android apps and Telugu-first marketing content for businesses worldwide. Explore our services and plan your project.",
   "/",
 );
 
 const serviceGroups = [
-  {
-    title: "Websites & apps",
-    description: "Give customers a clear place to find you, explore your business and get in touch.",
-    image: "/images/creative-studio-hero.webp",
-    imageClass: "home-service-web",
-    slugs: ["website-design", "website-improvement", "android-app-development", "qr-digital-menus"],
-  },
-  {
-    title: "Marketing & ads",
-    description: "Plan your campaigns, create the ads and reach people on Facebook and Instagram.",
-    image: "/images/creative-worktable.webp",
-    imageClass: "home-service-marketing",
-    slugs: ["digital-marketing", "meta-ads"],
-  },
-  {
-    title: "Branding & content",
-    description: "Build a recognisable brand and create the posts, reels and words that go with it.",
-    image: "/images/terra-brand-concept.webp",
-    imageClass: "home-service-brand",
-    slugs: ["logo-branding", "instagram-content", "content-writing", "telugu-content-voiceovers"],
-  },
+  { id: "build", number: "01", title: "Websites & apps", description: "A business website, an Android app or a simpler way for customers to order. We design and build around what people need to do.", image: "/images/creative-studio-hero.webp", alt: "Illustrative workspace with a website displayed on a laptop", slugs: ["website-design", "website-improvement", "android-app-development", "qr-digital-menus"] },
+  { id: "create", number: "02", title: "Brand & content", description: "Give your business a recognisable look and a clear voice. From your logo to the next reel, keep your message consistent.", image: "/images/terra-brand-concept.webp", alt: "Illustrative green brand packaging and printed stationery", slugs: ["logo-branding", "instagram-content", "content-writing", "telugu-content-voiceovers"] },
+  { id: "grow", number: "03", title: "Marketing & ads", description: "Connect your offer with the right audience. Plan your campaigns, shape the creative and keep ad spend and service costs clear.", image: "/images/service-marketing-plan.webp", alt: "Illustrative campaign planning workspace", slugs: ["digital-marketing", "meta-ads"] },
 ];
 
-const questions = [
-  { question: "Can I book just one service?", answer: "Yes. Start with a logo, website, app, a set of reels or another service. You can also combine services in one project. We agree exactly what is included before work starts." },
-  { question: "How much will my project cost?", answer: "We prepare a custom quotation after discussing your requirements. It sets out the deliverables, timeline, revisions and separate costs such as ad spend, hosting or third-party fees. You approve the scope before we begin." },
-  { question: "Can you improve my existing website?", answer: "Yes. We review your current website, its content and the enquiry process, then agree the changes it needs. You may only need improvements to a few pages, rather than a complete rebuild." },
-  { question: "Who records the footage for Instagram reels?", answer: "You provide the footage. We can write the script, edit the video, add captions and design the posts. Posting to your account is available when agreed. On-location filming is outside our current offer." },
-  { question: "Do you work with businesses across India?", answer: "Yes. We work remotely with businesses across India, including Andhra Pradesh and Telangana. Scripts and content are available in English and Telugu; the languages and formats are agreed for each project." },
+const steps = [
+  { title: "Share your brief", detail: "Tell us what your business does, who you want to reach and what you need. We help you choose the relevant services." },
+  { title: "Agree the scope", detail: "We outline the deliverables, quotation, responsibilities and review points. You can see what is included before work starts." },
+  { title: "Review the work", detail: "You review designs, content or working screens at agreed milestones. Feedback and revisions follow the project scope." },
+  { title: "Launch & handover", detail: "We check the agreed deliverables and hand over the files, access and guidance. Launch responsibilities and ongoing support are confirmed separately." },
 ];
+
+function BrandScene() {
+  return <figure className="brand-scene">
+    <div className="brand-scene-art" aria-hidden="true">
+      <div className="brand-scene-sheet"><BrandSymbol /><span>Ideas with<br />a clear direction.</span><div><i /><i /><i /></div></div>
+      <div className="brand-scene-browser">
+        <div className="scene-browser-bar"><span><i /><i /><i /></span><span>Brand &amp; website concept</span><Icon name="globe" size={13} /></div>
+        <div className="scene-site-nav"><span className="brand-lockup"><BrandLockup /></span><span>Design &amp; digital</span></div>
+        <div className="scene-site-content"><div><span>MADE TO CONNECT</span><strong>A clearer<br />brand.<br />A better<br />experience.</strong><span className="scene-site-button">Discover ManaCircle <Icon name="diagonal" size={12} /></span></div><div className="scene-site-photo"><Image className="image-hero-photo" src="/images/photography/bright-workspace.webp" alt="" fill sizes="(max-width: 760px) 40vw, 280px" preload /></div></div>
+      </div>
+      <div className="brand-scene-card"><span className="brand-lockup"><BrandLockup /></span><div><span>Creative thinking.<br />Connected execution.</span><Icon name="diagonal" size={24} /></div></div>
+    </div>
+    <figcaption>ManaCircle brand &amp; website concept <span>Illustrative presentation</span></figcaption>
+  </figure>;
+}
 
 export default function Home() {
-  return <div className="home-page">
+  return <div className="home-page studio-home">
     <section className="home-hero" aria-labelledby="home-heading">
-      <Image className="image-hero-photo" src="/images/creative-studio-hero.webp" alt="" fill sizes="(max-width: 600px) 1400px, (max-width: 900px) 1300px, 100vw" preload />
-      <div className="home-hero-shade" aria-hidden="true" />
-      <div className="container home-hero-inner">
+      <div className="container home-hero-grid">
         <div className="home-hero-copy">
-          <p className="home-hero-label">Creative & digital services for businesses</p>
-          <h1 id="home-heading">Websites, branding<br />& marketing for<br />your business.</h1>
-          <p className="home-hero-description">We’re ManaCircle. A team of eight creating websites, Android apps, brand identities and content for businesses across India.</p>
-          <div className="home-hero-actions">
-            <ButtonLink>Start your project</ButtonLink>
-            <a href="#services" className="home-hero-link">Explore services <Icon name="arrow" size={19} /></a>
-          </div>
+          <SectionLabel>Creative &amp; digital studio · Working worldwide</SectionLabel>
+          <h1 id="home-heading">Branding &amp; websites.<br /><span>Made to connect.</span></h1>
+          <p>We build brands, websites and digital experiences, with Telugu-first marketing that speaks to your audience.</p>
+          <div className="home-hero-actions"><Link className="button" href="#services">Explore our services <Icon name="arrow" size={19} /></Link><Link className="text-link" href="/contact">Start your project <Icon name="diagonal" size={18} /></Link></div>
+          <div className="home-hero-note"><BrandSymbol /><span>Eight people. Design, development<br />and content in one team.</span></div>
         </div>
-        <small className="home-image-credit">Illustrative studio scene · AI-generated</small>
+        <BrandScene />
       </div>
     </section>
 
-    <div className="home-facts"><ul className="container">
-      <li><Icon name="check" size={18} />One service or a complete project</li>
-      <li><Icon name="globe" size={18} />English & Telugu content</li>
-      <li><Icon name="check" size={18} />Custom quote before we begin</li>
-    </ul></div>
+    <nav className="home-service-strip" aria-label="Service categories"><div className="container"><a href="#build">Websites &amp; apps</a><BrandSymbol /><a href="#create">Brand &amp; content</a><BrandSymbol /><a href="#grow">Marketing &amp; ads</a></div></nav>
 
-    <section className="home-section container home-services" id="services" aria-labelledby="services-heading">
-      <div className="home-section-heading">
-        <div><p className="home-label">Our services</p><h2 id="services-heading">What does your<br />business need?</h2></div>
-        <p>Choose a service below to see what’s included.<br />Need a few things? We can plan them together.</p>
-      </div>
-      <div className="home-service-grid">
-        {serviceGroups.map(group => <article className="home-service-card" key={group.title}>
-          <div className={`home-service-image ${group.imageClass}`}>
-            <Image src={group.image} alt="" fill sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw" />
-            <span>Illustrative visual</span>
-          </div>
-          <div className="home-service-content">
-            <h3>{group.title}</h3><p>{group.description}</p>
-            <div className="home-service-links">{group.slugs.map(slug => {
-              const service = services.find(item => item.slug === slug)!;
-              return <Link href={`/services/${slug}`} key={slug}><span>{service.title}</span><Icon name="arrow" size={17} /></Link>;
-            })}</div>
-            {group.title === "Marketing & ads" && <p className="home-ad-note">Campaign planning, ad creatives and management are scoped to your needs. Advertising spend is separate.</p>}
-          </div>
-        </article>)}
-      </div>
-      <div className="home-service-help"><p><strong>Not sure which service to choose?</strong> Tell us what you want to improve.</p><Link href="/contact">Help me plan my project <Icon name="arrow" size={18} /></Link></div>
+    <section className="home-services container" id="services" aria-labelledby="services-heading">
+      <div className="home-section-heading"><div><SectionLabel>What we do</SectionLabel><h2 id="services-heading">Find the right service<br />for your business.</h2></div><p>Start with one service or bring a few together. Each page explains the scope, what we need and what you receive.</p></div>
+      <div className="home-service-list">{serviceGroups.map(group => <Reveal key={group.id}><article className="home-service-row" id={group.id}>
+        <div className="home-service-image"><Image src={group.image} alt={group.alt} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 35vw, 340px" /></div>
+        <div className="home-service-summary"><span className="service-number">{group.number}</span><h3>{group.title}</h3><p>{group.description}</p></div>
+        <div className="home-service-links">{group.slugs.map(slug => <Link key={slug} href={`/services/${slug}`}><span>{services.find(service => service.slug === slug)!.title}</span><Icon name="diagonal" size={17} /></Link>)}</div>
+      </article></Reveal>)}</div>
+      <div className="home-services-foot"><span>Service illustrations are AI-generated.</span><Link href="/services" className="text-link">Compare all services <Icon name="arrow" size={18} /></Link></div>
     </section>
 
-    <section className="home-samples home-section home-portfolio" id="sample-work" aria-labelledby="samples-heading">
-      <div className="container">
-        <div className="home-section-heading">
-          <div><p className="home-label">Our work</p><h2 id="samples-heading">Projects from<br />our team.</h2></div>
-          <p>Learning platforms, interactive websites and voice automation. A closer look at what we build.</p>
-        </div>
-        <PortfolioGallery compact />
-        <div className="home-samples-footer"><span>Explore the project. Try the experience.</span><Link href="/work">View all {portfolioProjects.length} projects <Icon name="arrow" size={18} /></Link></div>
-      </div>
-    </section>
+    <section className="home-telugu" aria-labelledby="telugu-heading"><div className="container home-telugu-grid">
+      <figure className="home-telugu-photo"><Image src="/images/photography/recording-microphone.webp" alt="Condenser microphone in a recording setup" fill sizes="(max-width: 700px) 100vw, 40vw" /><figcaption>Editorial photo · Hrayr Movsisyan / Unsplash</figcaption></figure>
+      <Reveal className="home-telugu-copy"><SectionLabel>Telugu comes naturally</SectionLabel><h2 id="telugu-heading">Your audience.<br />Their language.</h2><p className="home-telugu-native" lang="te">మీ కథ. మన భాష.</p><p>Scripts, voiceovers, reels and campaigns for Telugu audiences in Andhra Pradesh, Telangana and around the world. English content is available too.</p><Link href="/services/telugu-content-voiceovers" className="text-link">Explore Telugu content <Icon name="diagonal" size={19} /></Link></Reveal>
+    </div></section>
 
-    <section className="home-local home-section" aria-labelledby="local-heading">
-      <div className="container home-local-grid">
-        <div className="home-local-copy"><p className="home-label">English & Telugu content</p><h2 id="local-heading">Speak your<br />customers’ language.</h2><p>Scripts, voiceovers, subtitles, captions and regional ad creatives for Telugu-speaking audiences in Andhra Pradesh, Telangana and across India.</p><Link href="/services/telugu-content-voiceovers" className="text-link">Explore Telugu content services <Icon name="arrow" size={18} /></Link></div>
-        <div className="home-local-visual"><Image src="/images/voiceover-studio.webp" alt="Illustrative recording setup with a microphone and headphones" fill sizes="(max-width: 700px) 100vw, 45vw" /><span>Voiceovers · Subtitles · Regional ads</span></div>
-      </div>
-    </section>
+    <section className="home-process container" id="how-it-works" aria-labelledby="process-heading"><div><SectionLabel>How it works</SectionLabel><h2 id="process-heading">A small team.<br />A clear process.</h2><p>We’re an independent team of eight. You’ll know the scope, review points and next step throughout your project.</p><Link href="/about" className="text-link">Meet ManaCircle <Icon name="diagonal" size={18} /></Link></div><div className="home-process-list">{steps.map((step, index) => <details name="project-process" key={step.title} open={index === 0}><summary><span>0{index + 1}</span><h3>{step.title}</h3><Icon name="plus" size={19} /></summary><p>{step.detail}</p></details>)}</div></section>
 
-    <section className="home-section container home-how" id="how-it-works" aria-labelledby="how-heading">
-      <div className="home-how-intro"><p className="home-label">How it works</p><h2 id="how-heading">A clear plan.<br />From start to finish.</h2><p>Our eight-person team brings design, development, marketing and writing into one project. You know what’s included before we start.</p><Link href="/about" className="text-link">Meet ManaCircle <Icon name="arrow" size={18} /></Link></div>
-      <ol className="home-steps">
-        <li><span>1</span><div><h3>Tell us what you need</h3><p>Share your business, the service you’re interested in and your target timeline. It’s okay if you’re still figuring things out.</p></div></li>
-        <li><span>2</span><div><h3>Agree the scope & quotation</h3><p>We discuss the deliverables, cost, revisions and schedule. Work begins after you approve the plan.</p></div></li>
-        <li><span>3</span><div><h3>Review the work. Get ready to launch.</h3><p>We create the agreed work, get your feedback and hand over the website, app, designs or content.</p></div></li>
-      </ol>
-    </section>
-
-    <section className="home-section home-questions" aria-labelledby="questions-heading">
-      <div className="container home-questions-grid">
-        <div><p className="home-label">Before you start</p><h2 id="questions-heading">A few things<br />you might ask.</h2><p className="home-question-intro">Scope, pricing and what you’ll need to provide.</p><Link href="/guides" className="text-link">Read our project guides <Icon name="arrow" size={18} /></Link></div>
-        <FAQ items={questions} />
-      </div>
-    </section>
-
-    <section className="home-final" aria-labelledby="final-heading"><div className="container home-final-inner"><div><h2 id="final-heading">Let’s plan your next project.</h2><p>Tell us about your business. We’ll help you choose the right services.</p></div><ButtonLink>Start your project</ButtonLink></div></section>
+    <section className="home-questions"><div className="container home-questions-grid"><div><SectionLabel>Before you begin</SectionLabel><h2>A few useful<br />answers.</h2><p>Scope, pricing, languages and getting started.</p><Link href="/guides" className="text-link">Read our project guides <Icon name="diagonal" size={18} /></Link></div><FAQ items={homeFaq} /></div></section>
+    <ContactBanner />
   </div>;
 }

@@ -19,7 +19,7 @@ export const organization = {
   "@context": "https://schema.org", "@type": "Organization",
   "@id": absoluteUrl("/#organization"), name: site.name, url: absoluteUrl(),
   description: site.description, logo: absoluteUrl("/brand-mark.svg"),
-  areaServed: { "@type": "Country", name: "India" },
+  areaServed: "Worldwide",
   ...(site.email ? { email: site.email } : {}),
   ...(site.instagram ? { sameAs: [site.instagram] } : {}),
 };
