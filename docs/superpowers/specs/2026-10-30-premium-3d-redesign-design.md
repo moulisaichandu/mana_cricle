@@ -592,7 +592,7 @@ Bars get two brass collars each (`TorusGeometry(width * 0.56, width * 0.07, 8, 2
 
 ### 9.5 Home hero — glass-and-brass Eightfold (`scenes/hero-scene.tsx`)
 
-- Canvas camera `{ position: [0, 0.4, 7], fov: 32 }`, `eventSource` = the hero section (`anchor`). `<StudioLights preset="forest" tier />`. In the glass tier a **backdrop plane** (`src/components/three/backdrop.tsx`): `PlaneGeometry(12, 12)` at `z = -6` (covers the whole frustum at that depth), `ShaderMaterial` with **`transparent: false`**, `depthWrite: false`, `depthTest: false`, `toneMapped: false`, `mesh.renderOrder = -1`, painting the band's radial pool — `inner #1A3B2E → outer #11291F` over `smoothstep(.05, .62, d)` from uv `(.58, .56)`, alpha `a = 1 − smoothstep(.45, .75, d)` — and writing **premultiplied** colour `gl_FragColor = vec4(rgb * a, a)`. Why opaque: three r186's `WebGLRenderer.renderTransmissionPass` renders only the `opaque` render list (and the background) into the transmission buffer, so a `transparent: true` plane would be skipped and the bars would refract the half-white clear colour (the "muddy glass" must-fix). With `transparent: false` the plane is in the opaque list, blending is off, the fragment alpha is written straight to the alpha canvas (R3F's default `premultipliedAlpha: true`), so the glass refracts the gradient while the canvas edges still fade to fully transparent over the DOM band. Not mounted in the ceramic tier.
+- Canvas camera `{ position: [0, 0.4, 7], fov: 32 }`, `eventSource` = the hero section (`anchorRef`, the same ref object the scene gives `useScroll`). `<StudioLights preset="forest" tier />`. In the glass tier a **backdrop plane** (`src/components/three/backdrop.tsx`): `PlaneGeometry(12, 12)` at `z = -6` (covers the whole frustum at that depth), `ShaderMaterial` with **`transparent: false`**, `depthWrite: false`, `depthTest: false`, `toneMapped: false`, `mesh.renderOrder = -1`, painting the band's radial pool — `inner #1A3B2E → outer #11291F` over `smoothstep(.05, .62, d)` from uv `(.58, .56)`, alpha `a = 1 − smoothstep(.45, .75, d)` — and writing **premultiplied** colour `gl_FragColor = vec4(rgb * a, a)`. Why opaque: three r186's `WebGLRenderer.renderTransmissionPass` renders only the `opaque` render list (and the background) into the transmission buffer, so a `transparent: true` plane would be skipped and the bars would refract the half-white clear colour (the "muddy glass" must-fix). With `transparent: false` the plane is in the opaque list, blending is off, the fragment alpha is written straight to the alpha canvas (R3F's default `premultipliedAlpha: true`), so the glass refracts the gradient while the canvas edges still fade to fully transparent over the DOM band. Not mounted in the ceramic tier.
 - `<EightfoldMark size={3} variant={tier === "glass" ? "glass" : "ceramicSage"} spin={2π / 48} spinAxis="z" float parallax={0.4} spread={spread} onReady />` plus `<SoftFloorShadow y={-1.9} opacity={0.4} blur={2.6} scale={8} far={3} color="#061611" frames={1} />` (baked product-shot shadow).
 - Entrance (after the SVG assembly has finished and the canvas crossfades in): scale 0.96 → 1 and `rotation.y −0.2 → 0` over `--dur-xl` expo. Idle: `rotation.z += delta × 2π/48`; `Float speed={1} rotationIntensity={0.15} floatIntensity={0.3}` (existing `float` path). Pointer (fine pointers only): the existing damp toward `pointer × PARALLAX_TILT`.
 - Scroll (`couple="scroll"`): `useScroll({ target: anchorRef, offset: ["start start", "end start"] })` from `motion/react` (`anchorRef` is the `RefObject<HTMLElement | null>` the Stage passes, §9.1) → in `useFrame`: `spread = progress × 0.6` (bars unfold outward, telling the story backwards as the hero leaves), `rotation.z += progress × 0.35`, `position.y += progress × 0.6`. The slot's opacity 1 → 0 over progress 0.7 → 1 is CSS (`animation-timeline: view()` on `.home-hero .scene-slot`, range `exit 0% exit 100%`). `frameloop` is `"never"` once the stage leaves the viewport (existing `inView` logic).
@@ -648,7 +648,7 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 ## 10. Motion system — `src/app/motion.css` (`@layer motion`) + `src/components/reveal.tsx`
 
 - **Entrance.** Hero copy: CSS keyframes (`hero-rise`: `translateY(24px) → 0` + opacity for eyebrow/lead/actions/note; `hero-rise-solid`: transform only for the H1 lines). Below the fold: `Reveal` keeps its WAAPI approach (content visible in server HTML; animates `translateY(20px) → 0` only after the IntersectionObserver fires, never opacity before JS) and gains `delay?: number`, `distance?: number`, `as?: "div" | "section"`, `className`, plus child stagger via `--i` (60 ms). It also adds the class `is-in` for CSS-driven children (About exploded SVG).
-- **Scroll-linked (CSS only, `@supports (animation-timeline: view())`).** `.hairline` draws in (`scaleX 0 → 1`, `transform-origin: left`, `animation-range: entry 0% entry 60%`); numeral-xl drifts −12 px → 12 px; plate images parallax ±16 px inside their frame; the Telugu photo scales 1.04 → 1; the script card rises 16 px; the hero `.scene-slot` fades out over `exit 0% exit 100%`. All transform/opacity only; none on touch devices (`@media (hover: none)` disables parallax). The two WebGL scroll couplings use `useScroll` from `motion/react` inside the scenes.
+- **Scroll-linked (CSS only, `@supports (animation-timeline: view())`).** `.hairline` draws in (`scaleX 0 → 1`, `transform-origin: left`, `animation-range: entry 0% entry 60%`); numeral-xl drifts −12 px → 12 px; plate images parallax ±16 px inside their frame; the Telugu photo scales 1.04 → 1; the script card rises 16 px; the hero `.scene-slot` fades out over `exit 0% exit 100%`. All transform/opacity only; none on touch devices (`@media (hover: none)` disables parallax). The two WebGL scroll couplings use `useScroll({ target: anchorRef })` from `motion/react` inside the scenes (§9.1).
 - **Hover/press.** Buttons: background `--dur-xs`, arrow icon `translate(2px, -2px)` 180 ms (existing rule kept), `:active translateY(1px)`; links: underline colour `--dur-xs`; plates: tilt + lift (§9.7); nav underline grows from the left 240 ms; details plus icon rotates 45° 220 ms.
 - **Page transitions.** `src/components/page-transition.tsx` ("use client"): `const path = usePathname(); return <ViewTransition default="vt-page"><div className="page" key={path}>{children}</div></ViewTransition>` (`import { ViewTransition } from "react"`, exported by this React build; Next 16 App Router needs no config). `layout.tsx` renders `<main id="main-content"><PageTransition>{children}</PageTransition></main>` and `<ViewTransition name="mc-header"><Header …/></ViewTransition>`. CSS: `::view-transition-old(.vt-page) { animation: 180ms ease-in both vt-fade-out } ::view-transition-new(.vt-page) { animation: 320ms var(--ease-standard) both vt-rise-in }` (opacity + 10 px rise). Shared elements in Phase 2: `service-art-${slug}` (services ↔ detail), `work-figure-${slug}` (work ↔ detail), 360 ms. Nothing slides; durations never exceed 400 ms.
 - **Reduced motion.** `@media (prefers-reduced-motion: reduce)`: the existing `*, *::before, *::after { animation: none !important; transition: none !important }` rule stays (it now lives in the `refinement` layer; `!important` in a lower layer wins, which is the intended kill switch), `html { scroll-behavior: auto }`, scroll-driven animations off, tilt off, `::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important }`, and the quality hook returns `off` so no canvas mounts. Motion-based wrappers use `useReducedMotion()` from `motion/react` as a second guard. Native focus, hover colour changes and details toggling remain.
@@ -664,20 +664,21 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 | `src/app/motion.css` | create | `@layer motion`: keyframes, scroll-driven rules, view transitions, reduced-motion exceptions |
 | `src/app/services.css` | create | `@layer atelier`: `/services` and `/services/[slug]` (imported by both pages) |
 | `src/app/pages.css` | create | `@layer atelier`: About, Contact, Guides, Privacy, Thank-you, 404, error (imported by `layout.tsx`) |
-| `src/app/home.css` | modify (rewrite) | `@layer atelier`: §7 sections, dial, script card, hero stage |
-| `src/app/header.css` | modify (rewrite) | `@layer atelier`: header tones, scrolled state, dropdown, mobile sheet |
-| `src/app/portfolio.css` | modify (rewrite) | `@layer atelier`: work index/detail, Voice Agent cover; selectors preserved |
+| `src/app/home.css` | modify (rewrite) | Step 0: existing content wrapped unchanged in `@layer refinement { … }`; Track A: rewritten into `@layer atelier`: §7 sections, dial, script card, hero stage |
+| `src/app/header.css` | modify (rewrite) | Step 0: wrapped unchanged in `@layer refinement { … }`; Track C: rewritten into `@layer atelier`: header tones, scrolled state, under-header, dropdown, mobile sheet |
+| `src/app/portfolio.css` | modify (rewrite) | Step 0: wrapped unchanged in `@layer refinement { … }`; Track E: rewritten into `@layer atelier`: work index/detail, Voice Agent cover; selectors preserved |
 | `src/app/globals.css` | modify | First line becomes `@layer reset, base, components, responsive, studio, photography, refinement, atelier, motion;`; body font-family set to `var(--font-studio)`; nothing else changes in Phase 1 |
 | `src/app/refinement.css` | modify | Wrap entire content in `@layer refinement { … }` |
 | `src/app/studio.css`, `src/app/photography.css` | keep | Already layered; dead selectors removed in a later cleanup |
 | `src/app/layout.tsx` | modify | `adjustFontFallback` on the serif; import `tokens.css`, `atelier.css`, `pages.css`, `motion.css` (order: globals, studio, photography, refinement, tokens, atelier, header, pages, motion); `<ViewTransition name="mc-header">` around `Header`; `<div data-header-sentinel aria-hidden="true" />` before `<main>`; `<PageTransition>` inside `<main>`; `themeColor: "#F6F2E8"` |
 | `src/app/page.tsx` | modify | Remove `BrandScene`; add `HeroStage`, `ProcessDial`, `TiltCard`, `line-2`/`period` spans, `SectionLabel index`, `data-tone` attributes, Telugu plate + card; copy unchanged |
 | `src/app/page.tsx` → `export const viewport = { themeColor: "#11291F" }` | modify | Also on `about/page.tsx`, `work/page.tsx`, `services/page.tsx` |
-| `src/app/services/page.tsx`, `src/app/services/[slug]/page.tsx` | modify | §8.1–8.2 markup (tones, TiltCard, numerals, spans); import `services.css` |
+| `src/app/services/page.tsx`, `src/app/services/[slug]/page.tsx` | modify | §8.1–8.2 markup (tones, `.catalogue-shell` around the sibling nav + catalogue, TiltCard, numerals, spans); import `services.css` |
+| `src/lib/service-images.ts` | modify | Export the existing caption string once as `AI_SCENE_CAPTION` ("Illustrative service scene · AI-generated"); data unchanged |
 | `src/app/work/page.tsx` | modify | Dark intro band; imports unchanged |
 | `src/app/about/page.tsx`, `contact/page.tsx`, `guides/page.tsx`, `guides/[slug]/page.tsx`, `privacy/page.tsx`, `thank-you/page.tsx`, `not-found.tsx`, `error.tsx` | modify | §8.5–8.8 markup only |
 | `src/app/work/[slug]/page.tsx` | modify | Concept `project-stage` plate; `data-tone`; Phase 2 waveform stage in `portfolio-detail.tsx` |
-| `src/components/hero-stage.tsx` | create | Server figure: `Stage` + `EightfoldArt` fallback + caption |
+| `src/components/hero-stage.tsx` | create | Server figure: `Stage` (imported from `@/components/three/stage`, not the barrel) + `EightfoldArt` fallback + caption |
 | `src/components/tilt-card.tsx` | create | CSS-3D plate with keyboard parity |
 | `src/components/process-dial.tsx` | create | CSS-3D dial driven by native `toggle` |
 | `src/components/page-transition.tsx` | create | `ViewTransition` wrapper keyed by pathname |
@@ -686,8 +687,8 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 | `src/components/reveal.tsx` | modify | `delay`, `distance`, `as`, `is-in` class, child stagger |
 | `src/components/brand.tsx` | modify | Add `EightfoldArt`; `BrandSymbol`/`BrandLockup` unchanged |
 | `src/components/shared.tsx` | modify | `SectionLabel` gains `index`; `ContactBanner` inset plate markup; `Footer` tone + classes; `Process` numerals; `ButtonLink`/`FAQ` unchanged |
-| `src/components/header.tsx` | modify | `data-tone`/`data-scrolled` from the hook; body scroll lock while open; behaviour unchanged |
-| `src/components/portfolio-gallery.tsx`, `portfolio-detail.tsx`, `guide-cards.tsx`, `studio-photo.tsx` | modify | Wrap visuals in `TiltCard`; Phase 2 `ViewTransition` names and waveform stage |
+| `src/components/header.tsx` | modify | `data-tone`/`data-scrolled` from the hook; `data-tone="dark"` forced while the sheet is open; one new `useEffect([open])` scroll lock with cleanup; nav structure, ids, names and keyboard behaviour unchanged |
+| `src/components/portfolio-gallery.tsx`, `portfolio-detail.tsx`, `guide-cards.tsx`, `studio-photo.tsx` | modify | `TiltCard` replaces the visual's element via `as` (`article.guide-card`, `div.plate` inside `.portfolio-visual-link`, `figure` for the studio photo) — never a wrapper around it, so counts stay; Phase 2 `ViewTransition` names and waveform stage |
 | `src/components/three/stage.tsx` | create | Client shell: quality gate, slot, idle, entrance gate, crossfade, error boundary |
 | `src/components/three/stage-error-boundary.tsx` | create | Class error boundary |
 | `src/components/three/use-scene-quality.ts` | create | Tier detection |
@@ -697,12 +698,12 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 | `src/components/three/waveform.tsx` | create (Phase 2) | Brass rods + plinth |
 | `src/components/three/scenes/hero-scene.tsx` | create | Home hero scene |
 | `src/components/three/scenes/assembly-scene.tsx`, `waveform-scene.tsx`, `missing-bar-scene.tsx` | create (Phase 2) | About, Voice Agent, 404 scenes |
-| `src/components/three/scene-canvas.tsx` | modify | low-power, tone mapping, `transmissionResolutionScale`, `eventSource`, `frameloop: never`, context-lost handling |
+| `src/components/three/scene-canvas.tsx` | modify | WebGL2-only probe exported as `hasWebGL2()`, low-power, tone mapping, `transmissionResolutionScale`, `eventSource`, `frameloop: never`, context-lost handling; `data-scene` stays on its container |
 | `src/components/three/eightfold.tsx` | modify | `missing`, `spreadTravel`, `jitter`, brass collars, presets from `materials.ts` |
 | `src/components/three/studio-lights.tsx` | modify | `tier` prop, final light values, shadow defaults |
-| `src/components/three/index.ts`, `lazy.tsx` | modify / keep | Export new modules; `lazyScene` unchanged |
-| `src/app/three-preview/*` | keep | Dev-only preview (noindex); remove before public launch (open question) |
-| `src/components/studio-showcase.tsx`, `circle-art.tsx`, `service-art.tsx`, `work-gallery.tsx`, `android-app-art.tsx` | keep (unused) | No importers today; delete in the cleanup follow-up after verification |
+| `src/components/three/index.ts`, `lazy.tsx` | modify / keep | Barrel exports scene-side modules only (`materials`, `Backdrop`, Phase 2 `Waveform`) and **never** `Stage`, `use-scene-quality`, `use-single-canvas` or `stage-error-boundary`; `lazyScene` unchanged |
+| `src/app/three-preview/page.tsx` | create (Phase 2 step 5, optional) | Dev-only capture page for the §9.9 poster: `notFound()` in production, `robots: { index: false }`, linked from nowhere; not created unless the poster is pursued. No such route exists today |
+| `src/components/studio-showcase.tsx`, `circle-art.tsx`, `service-art.tsx`, `work-gallery.tsx`, `android-app-art.tsx` | keep (unused) | Dead code: no route imports them (`android-app-art.tsx` is imported only by `studio-showcase.tsx`, which itself has no importers); delete in the cleanup follow-up after verification |
 | `tests/browser-checks.cjs` | modify | §15 |
 | `docs/ASSETS.md`, `docs/REWORK-VALIDATION.md` | modify | Record the SVG artwork, optional poster, and fresh verification results |
 | `docs/superpowers/specs/2026-10-30-premium-3d-redesign-design.md` | create | This document |
@@ -712,7 +713,7 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 ## 12. CSS architecture
 
 - **Layer order (declared once, first line of `globals.css`):** `@layer reset, base, components, responsive, studio, photography, refinement, atelier, motion;`
-- **Every file is layered.** `globals.css` (reset/base/components/responsive, legacy), `studio.css` (`studio`), `photography.css` (`photography`), `refinement.css` (wrapped in `refinement`), `atelier.css`/`header.css`/`home.css`/`portfolio.css`/`services.css`/`pages.css` (all `@layer atelier { … }`), `motion.css` (`motion`). The only unlayered file is `tokens.css`, and it contains custom properties only — so its `:root` palette aliases beat the legacy `:root` blocks in `base`, `studio` and `refinement`, while no unlayered rule can beat `atelier`.
+- **Every file is layered — from Step 0 onward.** `globals.css` (reset/base/components/responsive, legacy), `studio.css` (`studio`), `photography.css` (`photography`), `refinement.css` (wrapped in `refinement`), `atelier.css`/`header.css`/`home.css`/`portfolio.css`/`services.css`/`pages.css` (all `@layer atelier { … }` once rewritten), `motion.css` (`motion`). **Interim rule (Step 0):** `home.css`, `header.css` and `portfolio.css` are wrapped *unchanged* in `@layer refinement { … }` — the same layer as `refinement.css`, imported after it, so their intra-layer order reproduces today's cascade exactly (nothing visible changes) while `atelier` is guaranteed to beat them; e.g. the legacy `.home-hero { background:#edf2e7 }` and `.studio-home h1 { font-family: var(--font-studio) }` can no longer override `atelier` rules. Tracks A, C and E then rewrite each file into `@layer atelier`. The only unlayered file is `tokens.css`, and it contains custom properties only — so its `:root` palette aliases beat the legacy `:root` blocks in `base`, `studio` and `refinement`, while no unlayered rule can beat `atelier`.
 - **Why `atelier` sits after `responsive`:** legacy breakpoint rules for shared selectors (`.contact-banner`, `.site-footer`, `.page-intro`, `.service-hero`, `.portfolio-*`) must not override the new design; `atelier` owns its breakpoints (1100, 1024, 900, 760, 480, 390, 320) inside each file.
 - **Files imported from pages** (`home.css`, `portfolio.css`, `services.css`) still slot into the global order because the layer list is established by `globals.css`, which `layout.tsx` imports first.
 - **`!important` inversion:** the reduced-motion kill switch in `refinement` uses `!important`; important declarations in lower layers win, which is desired. No other `!important` is allowed in new CSS.
@@ -725,21 +726,21 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 
 | Component | Requirements |
 | --- | --- |
-| Header | Existing behaviours and names unchanged; tone colours all ≥4.5:1 in both tones; focus ring 2 px `--focus` offset 3 px; dropdown links ≥44 px; menu toggle 44 × 44; Escape returns focus; body scroll lock released on close |
+| Header | Existing behaviours and names unchanged; tone colours all ≥4.5:1 in both tones; focus ring 2 px `--focus` offset 3 px; desktop nav links `min-height: 44px`; `.services-toggle` 44 × 44; dropdown links ≥44 px; menu toggle 44 × 44; mobile-sheet rows 56 px; Escape returns focus; the bar is dark while the sheet is open; body scroll lock released on close (effect cleanup) |
 | Hero stage | `.scene-slot` and canvas `aria-hidden="true"`, no focusable children; `EightfoldArt` `aria-hidden="true"` (the figcaption carries the meaning); figcaption 12 px mist ≥4.5:1; no element in the hero animates opacity if it can be LCP |
-| Buttons / links | ≥44 px targets (`.button` 54 px, nav CTA 46 px, list links 48 px, pagination 44 px); arrows decorative; underline on hover and focus; `:focus-visible` lifted state on `TiltCard` wrappers |
+| Buttons / links | ≥44 px targets (`.button` 54 px, nav CTA 46 px, list links 48 px, pagination 44 px); arrows decorative; underline on hover and focus; `:focus-within` lifted state on `TiltCard` elements (single element, §9.7) |
 | Eyebrows / numerals | Eyebrow 12 px minimum; numerals bronze on light (5.4:1) and gold on dark (8.1:1); never lighter; if a decorative numeral is ever lightened it must be `aria-hidden` |
 | Two-line headings | `.line-2` is a plain span inside the heading (one accessible name); `.period` only on dark |
 | Service rows | Ten real links with visible text; plate images keep their `alt`; AI chip is visible text, not a tooltip |
-| Telugu section | `lang="te"` kept on the line; script card `aria-hidden="true"`; photo `alt` kept; credit kept |
+| Telugu section | `lang="te"` kept on the line; script card `aria-hidden="true"`; photo `alt` kept; credit kept at 12 px; `overflow-wrap: anywhere` on the Telugu line and card (no local Telugu face, §4.1) |
 | Process | Native `<details name="project-process">` untouched; summary text is the accessible name; dial `aria-hidden="true"` and purely reactive |
 | FAQ | Native `<details>`; summaries ≥64 px; 16 px text |
 | Closing plate | Button cream on forest-900 (13.8:1); decorative ring `aria-hidden` |
-| Footer | Links ≥40 px tall; 11 px credits are the one exception (existing, links underlined); focus ring gold |
+| Footer | Links ≥44 px tall (brief constraint); photo credits 12 px, underlined, 44 px targets — no size exception anywhere; focus ring gold |
 | TiltCard | Pointer-only tilt; focus-within lift; never traps focus; contents remain real links |
-| Contact form | All ids/labels/ARIA unchanged; inputs 52 px; error text `--error` on paper 6.6:1; error summary keeps `tabIndex={-1}` focus behaviour |
+| Contact form | All ids/labels/ARIA unchanged; inputs 52 px; error text `--error` on paper 6.4:1; error summary keeps `tabIndex={-1}` focus behaviour |
 | View transitions | Disabled under reduced motion; no content depends on them |
-| Canvas routes | axe runs on `<main>` with WebGL on: canvases hidden, Voice Agent SVG keeps `role="img"`, no colour-only state |
+| Canvas routes | On `/` (and `/work/voice-agent` in Phase 2) axe runs on `<main>` **after** `[data-stage][data-ready="true"]` appears when `data-tier` is not `off` (so the canvas is really mounted), otherwise against the fallback: canvases `aria-hidden`, Voice Agent SVG keeps `role="img"`, no colour-only state |
 | Overflow | `.container` maths, `min-width: 0` on grid children, Telugu clamp, stage `max-width: 100%`, rail-free layout → `scrollWidth <= innerWidth` at 320/390/768/1024/1440 |
 
 ---
@@ -747,7 +748,7 @@ One `SceneCanvas` per route; `dpr` capped at `[1, 1.5]` (1 below 1024 px); `fram
 ## 14. Performance plan and budgets
 
 - **LCP:** the H1 (server HTML, `display: swap`, metric-matched fallback) on every viewport; the SVG fallback is inline and paints in the same frame. No `preload` on any below-fold image at 390 px. Target lab LCP < 2.0 s desktop, < 2.5 s mobile.
-- **JavaScript:** first-party JS before idle ≤ 150 KB gz (`header`, `reveal`, `tilt-card`, `process-dial`, `page-transition`, the `stage` shell); 3D chunk ≤ 250 KB gz (three core alone is ~170 KB gz), loaded only from `Stage` after hydration + `requestIdleCallback` and only when the tier is not `off`; `motion/react` only inside client wrappers and scenes. Verify from `next build --webpack` output.
+- **JavaScript:** first-party JS before idle ≤ 150 KB gz (`header`, `reveal`, `tilt-card`, `process-dial`, `page-transition`, the `stage` shell); 3D chunk ≤ 250 KB gz (three core alone is ~170 KB gz), loaded only from `Stage` (imported from `@/components/three/stage`, never via the barrel) after hydration + `requestIdleCallback` (or its `setTimeout` fallback) and only when the tier is not `off`; `motion/react` only inside client wrappers and scenes. Verify from `next build --webpack` output: the page chunks for `/` must not contain `three`.
 - **Rendering:** §9.10 rules; `PerformanceMonitor` steps dpr and tier down; the hero loop stops when the stage scrolls out.
 - **CSS:** scroll-driven animations and tilt use transform/opacity only; grain is a 400-byte data URI at ≥900 px with no blend mode; `backdrop-filter` only on the header at ≥760 px; `content-visibility` is **not** used (it fights the `#services`/`#how-it-works` anchors).
 - **Images:** existing WebPs reused; below-the-fold lazy; illustrations 4:3 at ≤ 900 px wide; microphone photo at 1200 px.
@@ -763,11 +764,11 @@ Preserved hooks (do not rename): `.home-service-links a` (= 10), `main a[href^="
 Changes:
 
 1. Line 25 `.image-hero-photo` → `assert(await page.locator('.hero-stage .hero-fallback').isVisible(), 'Homepage hero artwork must render')` plus `await page.waitForFunction(() => { const img = document.querySelector('.home-telugu-photo img'); return img && img.complete && img.naturalWidth > 0; })`.
-2. Inside the route loop after `h1` waits: `assert(await page.locator('canvas').count() <= 1, route + ' must mount at most one canvas')`.
-3. After the homepage interactions: `assert(await page.locator('.process-dial').getAttribute('data-step') === '2', 'Process dial must follow the open step')`.
+2. Inside the route loop after the `h1` wait: `assert(await page.locator('canvas').count() <= 1, route + ' must mount at most one canvas')` stays as a cheap sanity check, **and** on `/` (Phase 2: also `/work/voice-agent`) the real claim is tested after the hand-off: `const stage = page.locator('[data-stage]').first(); if (await stage.count() && await stage.getAttribute('data-tier') !== 'off') { await page.locator('[data-stage][data-ready="true"]').first().waitFor({ timeout: 10000 }); assert(await page.locator('canvas').count() === 1, route + ' must mount exactly one canvas once ready'); }` — the axe run for that route happens after this wait (§13). Headless Chromium exposes WebGL2 through SwiftShader, so the tier is normally `ceramic` or `glass` there; the `off` branch keeps the suite green on machines without it.
+3. After the homepage interactions: `await page.waitForFunction(() => document.querySelector('.process-dial')?.dataset.step === '2', null, { timeout: 2000 })` (the `toggle` event is dispatched asynchronously after `open` changes, so a synchronous attribute read would race), then `assert(await page.locator('.process-dial').getAttribute('data-step') === '2', 'Process dial must follow the open step')`.
 4. Reduced-motion pass: `await page.emulateMedia({ reducedMotion: 'reduce' }); await page.goto(origin); await page.waitForTimeout(1500); assert(await page.locator('canvas').count() === 0, 'Reduced motion must not mount WebGL'); await page.emulateMedia({ reducedMotion: null });`
 5. No-JS pass: `const ctx = await page.context().browser().newContext({ javaScriptEnabled: false }); const p2 = await ctx.newPage(); await p2.goto(origin); assert(await p2.locator('h1').count() === 1 && await p2.locator('.home-service-links a').count() === 10 && await p2.locator('.hero-fallback svg').count() === 1 && await p2.locator('.home-process-list details[open]').count() === 1, 'Content must render without JavaScript'); await ctx.close();`
-6. Add `'/work/voice-agent'` canvas check implicitly through item 2; add `/three-preview` to nothing (dev-only).
+6. `'/work/voice-agent'` gets the item-2 ready-wait in Phase 2. The optional dev-only `/three-preview` (Phase 2 step 5, if created) is added to no test and no route list: it is never linked, so `scripts/check-rendered-site.cjs`'s internal-destination coverage ignores it, and it returns 404 in production builds.
 
 Gates: `npm run typecheck`, `npm run build`, `npm test`, `npm run test:e2e` (with `TEST_BASE_URL` pointing at the running server), `node scripts/check-rendered-site.cjs` — all exit 0 before Phase 2 and again before review-pr/ship.
 
@@ -778,10 +779,10 @@ Gates: `npm run typecheck`, `npm run build`, `npm test`, `npm run test:e2e` (wit
 ### Step 0 — shared foundation (one engineer; blocks everything else; ~half a day)
 
 1. `tokens.css`, `atelier.css` (foundation sections only: tones, type, headings, buttons, links, eyebrow + index, numerals, hairlines, plates, bands, grain, forms, stage/scene-slot styles, concept-art serif overrides).
-2. `globals.css` layer line; `refinement.css` wrapped in `@layer refinement`; `layout.tsx` (fonts, imports, sentinel, `PageTransition`, header `ViewTransition`, themeColor); `motion.css` skeleton (keyframes, reduced-motion exceptions).
+2. `globals.css` layer line; `refinement.css` wrapped in `@layer refinement`; **`home.css`, `header.css` and `portfolio.css` wrapped unchanged in `@layer refinement { … }`** (§12 interim rule — a pure wrap, no rule edits, so Step 0 changes nothing visible while guaranteeing `atelier` wins from here on); `layout.tsx` (fonts, imports, sentinel, `PageTransition`, header `ViewTransition`, themeColor); `motion.css` skeleton (keyframes, reduced-motion exceptions).
 3. `shared.tsx` (`SectionLabel index`, `ContactBanner` inset plate, `Footer` tone, `Process` numerals), `brand.tsx` (`EightfoldArt`), `tilt-card.tsx`, `reveal.tsx` extension, `page-transition.tsx`.
 4. The `Stage` **contract** (props and data attributes in §9.1) is written into `stage.tsx` as a shell that renders only the fallback, so tracks A and B can start without waiting for each other.
-5. Typecheck + build green. **Owner checkpoint:** screenshot the re-skinned homepage at 1440 and 390 for Mouli before building further (serif headlines and dark header tone supersede the 13 Oct decisions; see §17).
+5. Typecheck + build green. **No owner gate here** (design lead's call): Step 0 only lays the foundation — `home.css` and `header.css` are still the wrapped legacy files, so a Step 0 screenshot could not show the serif headlines or the dark header anyway. Tracks A–G start immediately on the direction in this document; the owner's newest brief ("do it however you want, the output must blow my mind") supersedes the 13 Oct "Geist headings" and "light header" decisions (§17.5, §17.6). The owner review is the non-blocking **Phase 1 review point** below.
 
 ### Phase 1 — parallel tracks on disjoint files
 
@@ -795,6 +796,8 @@ Gates: `npm run typecheck`, `npm run build`, `npm test`, `npm run test:e2e` (wit
 | F — Pages | `pages.css`, `about`, `contact`, `guides`, `guides/[slug]`, `privacy`, `thank-you`, `not-found.tsx`, `error.tsx`, `guide-cards.tsx`, `studio-photo.tsx` | Step 0 |
 | G — Motion + tests + docs | `motion.css` (scroll-driven rules, view transitions), `tests/browser-checks.cjs`, `docs/ASSETS.md`, validation notes | Step 0; runs the suite as tracks land |
 
+**Phase 1 review point (non-blocking, design lead's call):** as soon as tracks A and C have landed on the branch, screenshot `/` at 1440 and 390 (serif headlines, dark band-following header, hero assembly) and share them with Mouli with one question: *keep, or flip the revert switch?* Work on the remaining tracks and the gate continues meanwhile. If the owner rejects the serif, set `--font-heading: var(--font-studio)` and add the `.heading-revert` weights (§17.5); if he rejects the dark header, set `FORCE_LIGHT_HEADER = true` in `use-band-tone.ts` (§17.6). Both are under ten lines and need no re-planning. Silence means proceed.
+
 Integration gate: typecheck, build, unit tests, browser checks, rendered-site check, Lighthouse mobile/desktop on `/`; fix regressions before Phase 2.
 
 ### Phase 2 — second wave (after the gate)
@@ -803,7 +806,7 @@ Integration gate: typecheck, build, unit tests, browser checks, rendered-site ch
 2. Voice Agent waveform (`waveform.tsx`, `scenes/waveform-scene.tsx`, `portfolio-detail.tsx` stage).
 3. 404 missing-bar scene (`scenes/missing-bar-scene.tsx`, `not-found.tsx`).
 4. Shared-element view transitions (`service-art-${slug}`, `work-figure-${slug}`).
-5. Optional poster capture (§9.9) and `docs/ASSETS.md` entry.
+5. Optional poster capture (§9.9): create the dev-only `src/app/three-preview/page.tsx` (production `notFound()`, noindex, unlinked), capture the WebP, add the `docs/ASSETS.md` entry; skip the whole step if the capture is not quick.
 6. Legacy CSS cleanup: remove dead selectors from `globals.css`/`studio.css`/`refinement.css` once every route is verified; re-run the full gate.
 
 Every phase ends with review-pr and ship under this repository's policy (local branch; no automatic publishing, merge or deployment).
@@ -816,26 +819,32 @@ Every phase ends with review-pr and ship under this repository's policy (local b
 2. **Dark surfaces** are forest-900 `#11291F` with the warm radial gradient and grain; `#0B1F18` only for the footer and 404. Cream is the majority by height.
 3. **Gold is a line, not a fill.** Text in gold only on dark (eyebrows, numerals, H1 full stop); bronze `#7A5F25` is the gold voice on cream.
 4. **Identity fidelity:** the wordmark period stays green on both surfaces (`#2F6749` light, `#C8DBA9` dark — the current footer value). Direction 1's gold period was dropped to honour the "green period" identity rule. The Eightfold symbol geometry is untouched; `EightfoldArt` only adds finish and variants.
-5. **Typography supersedes 13 Oct:** Instrument Serif for H1/H2/family titles ≥26 px and numerals; Geist for everything read, clicked or typed; display capped at 88 px. This consciously replaces "Geist for headings"; the guardrails above distinguish it from the rejected oversized-editorial look. Owner confirms at the Step 0 checkpoint.
-6. **Header tone supersedes 13 Oct** ("light header with forest-green top rule"): the header follows the band under it; on cream pages it is still a light header. The 3 px green top rule becomes a 1 px gold hairline below the header when scrolled.
+5. **Typography supersedes 13 Oct (design lead's call, default = proceed):** Instrument Serif for headings, titles, straplines and pull lines ≥24 px and numerals ≥20 px; Geist for body, navigation, controls, forms, captions and chips; display capped at 88 px. This consciously replaces "Geist for headings" from `docs/REWORK-BRIEF.md`; the guardrails above distinguish it from the rejected oversized-editorial look. Builders do not wait for confirmation: the owner reviews at the Phase 1 review point (§16), and the revert is one token — `--font-heading: var(--font-studio)` plus a `.heading-revert` block (`font-weight: 650; letter-spacing: −0.045em; font-style: normal` on `.line-2`) — because every serif rule reads `var(--font-heading)` (§4.1).
+6. **Header tone supersedes 13 Oct (design lead's call, default = proceed)** ("light header with forest-green top rule" in `docs/HEADER-IDENTITY.md`): the header follows the full-bleed band under it (`data-band="full"` only) and is pulled over the opening band by `.under-header`; on cream pages it is still a light header. The 3 px green top rule becomes a 1 px gold hairline below the header when scrolled. Revert switch: `FORCE_LIGHT_HEADER = true` in `use-band-tone.ts` returns `light` always and `header.css` restores the 3 px forest-800 top rule; `.under-header` then also sets `margin-top: 0`.
 7. **Universal entrance** is SVG + CSS (row → mark) for every device and no-JS; WebGL adds material, light, parallax and scroll unfold afterwards. The WebGL mark starts assembled.
 8. **Four WebGL moments** (home hero, About assembly, Voice Agent waveform, 404) + CSS 3D (plates, dial, script card). Never two canvases on one route; no canvas on `/services`, `/contact`, `/guides`, `/work` index, `/privacy`, `/thank-you`, error.
 9. **Phones never mount WebGL**; they get the glazed SVG with the CSS assembly. Tablets and coarse pointers get ceramic.
 10. **Telugu section** uses the existing microphone photograph, framed honestly as a hairline plate, plus a decorative script card printing only the existing Telugu line.
 11. **Closing plate** is an inset dark plate on a cream section, not a full-bleed band, so the page never ends in ~900 px of dark.
 12. **Buttons** are 6 px rectangles, plates 3 px; no pills, glass UI panels, gradient cards, magnetic buttons, custom cursors, rails or pinned storytelling.
-13. **Copy, data, services, routes, disclosures, credits and the footer service list are unchanged.**
+13. **Copy, data, services, routes, disclosures, credits and the footer service list are unchanged.** The only presentational strings added are enumerated in item 16; the disclosure chip reuses the existing caption string.
 14. **Legacy CSS is layered, not deleted** in this pass; cleanup is Phase 2 step 6.
 15. **`.image-hero-photo` is retired** from the test in favour of `.hero-fallback`, because the hero no longer contains a photograph; the Telugu photograph's load is asserted instead.
+16. **New presentational strings (the complete list, for copy review; everything else is the existing `src/lib/*.ts` copy):** (a) hero `figcaption` "Eightfold — the ManaCircle mark." (§7.3) — the only new sentence on the site; (b) eyebrow indices "01 —" … "04 —" rendered `aria-hidden` by `SectionLabel index` (§7); (c) the home plate chips reuse the existing `AI_SCENE_CAPTION` string "Illustrative service scene · AI-generated" from `src/lib/service-images.ts` — no new disclosure wording (§7.4); (d) catalogue numerals "01/02/03" and process/deliverable numerals (existing numbering, restyled); (e) the Telugu script card prints only the existing Telugu line (§7.5). No other visible string is introduced; `alt` texts, labels, button texts and `aria-label`s are unchanged.
+17. **Header overlap mechanism:** sticky header in flow + `.under-header` negative margin on the opening full-bleed band of dark routes (§6.1); no fixed positioning, no body padding, anchor and sentinel maths unchanged.
+18. **Header tone observer** targets `main [data-tone="dark"][data-band="full"]` only; inset dark plates carry `data-tone` for tokens but never `data-band` (§6.1).
+19. **`TiltCard` is a single element** rendered through `as`; it replaces the element it decorates and never wraps it, so class counts in the e2e suite are stable (§9.7).
+20. **Phase 1 renders About and 404 without `Stage`** (bare `EightfoldArt` in a static figure); `Stage`'s scene union and lazy map contain only `hero` until Phase 2 files exist (§8.5, §8.8, §9.1).
+21. **Dev-only `/three-preview`** does not exist today and is created only in Phase 2 step 5 for the optional poster; it 404s in production and is never linked (§9.9, §11).
 
 ---
 
 ## 18. Open questions for the owner
 
-1. Serif headlines and the band-following header tone supersede two 13 October decisions — confirm after the Step 0 screenshot (1440 and 390).
+1. **Decided (design lead's call) — information, not a blocker:** serif headlines and the band-following header tone supersede the two 13 October decisions and builders proceed without waiting. You will get 1440 and 390 screenshots at the Phase 1 review point (§16); say "revert serif" or "revert header" and the one-token switches in §17.5/§17.6 are flipped. Silence means proceed.
 2. Phones: default is the glazed SVG with CSS assembly, no WebGL. Do you want ceramic WebGL on capable phones as an opt-in later?
 3. Closing plate: inset dark plate on cream (spec) versus full-bleed dark band — confirm the inset.
 4. Telugu script card duplicating the Telugu line as a decorative prop — keep or drop?
-5. `/three-preview` route: keep until public launch (useful for tuning and the optional poster), then remove?
+5. **Decided:** no `/three-preview` route exists in the repository; one is created only if the optional poster (§9.9) is pursued, as a dev-only page that 404s in production and is never linked — nothing for you to decide unless you want the poster dropped entirely.
 6. `/services` index has no WebGL by design (restraint); do you want family objects there in a Phase 3?
 7. Optional glass poster capture: proceed only if the dev-only capture is quick; the site is complete without it.
