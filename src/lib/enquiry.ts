@@ -47,3 +47,30 @@ export function formatBrief(data: Brief) {
   const service = serviceOptions.find(([id]) => id === data.service)?.[1] || data.service;
   return `MANACIRCLE — PROJECT BRIEF\n\nName: ${data.name}\nBusiness: ${data.business || "To discuss"}\nService: ${service}\nPreferred contact: ${data.contactMethod}\nContact: ${data.contact}\nWebsite: ${data.website || "Not provided"}\nTiming: ${data.timing || "To discuss"}\nBudget: ${data.budget || "To discuss"}\n\nABOUT THE PROJECT\n${data.description}\n\nPrepared locally. This file has not been sent to ManaCircle.\n`;
 }
+
+export type QuickEnquiry = { kind: "quick"; name: string; phone: string; email: string; service: string; consent: boolean; honeypot: string };
+export type QuickErrors = Partial<Record<keyof QuickEnquiry, string>>;
+export const emptyQuickEnquiry: QuickEnquiry = { kind: "quick", name: "", phone: "", email: "", service: "not-sure", consent: false, honeypot: "" };
+// The site-wide contact modal sends this lighter shape; `kind` tells the server which validator applies. Briefs carry no `kind`.
+export function isQuickEnquiryPayload(raw: unknown): raw is Record<string, unknown> & { kind: "quick" } {
+  return !!raw && typeof raw === "object" && (raw as Record<string, unknown>).kind === "quick";
+}
+export function validateQuickEnquiry(input: unknown, requireConsent = false): { data: QuickEnquiry; errors: QuickErrors } {
+  const raw = input && typeof input === "object" ? input as Record<string, unknown> : {};
+  const str = (key: string) => typeof raw[key] === "string" ? raw[key].trim() : "";
+  const data: QuickEnquiry = { kind: "quick", name: str("name"), phone: str("phone"), email: str("email"), service: str("service"), consent: raw.consent === true, honeypot: str("honeypot") };
+  const errors: QuickErrors = {};
+  const digits = data.phone.replace(/\D/g, "");
+  if (data.name.length < 2 || data.name.length > 100) errors.name = "Enter your full name (2–100 characters).";
+  if (!/^\+?[\d\s()-]+$/.test(data.phone) || digits.length < 8 || digits.length > 15) errors.phone = "Enter a phone number with country code, 8–15 digits.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 254) errors.email = "Enter a valid email address.";
+  if (!serviceOptions.some(([value]) => value === data.service)) errors.service = "Choose a service or Help me decide.";
+  if (requireConsent && !data.consent) errors.consent = "Please agree to being contacted about this enquiry.";
+  if (data.honeypot) errors.honeypot = "We couldn’t process this form. Please try again.";
+  return { data, errors };
+}
+
+export function formatQuickEnquiry(data: QuickEnquiry): string {
+  const service = serviceOptions.find(([id]) => id === data.service)?.[1] || data.service;
+  return `MANACIRCLE — CALL-BACK REQUEST\n\nName: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nService: ${service}\n\nPrepared locally. This file has not been sent to ManaCircle.\n`;
+}

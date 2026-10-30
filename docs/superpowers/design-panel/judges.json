@@ -1,0 +1,307 @@
+[
+  {
+    "scores": [
+      {
+        "direction": "Direction 1: Eightfold Atelier — cinematic editorial luxury",
+        "fit_to_owner_words": 9,
+        "craft_and_taste": 9,
+        "brand_continuity": 9,
+        "feasibility_in_scope": 6.5,
+        "performance_accessibility": 7.5,
+        "distinctiveness": 8,
+        "total": 49,
+        "rationale": "Owner lens: idhi okkate 'adhiripoyindi' anipinche direction. The deep forest-950 cinema hero with the glass-and-brass Eightfold turning under a warm key light is exactly 'rich look', and the cream paper reading sections with Instrument Serif headlines, Geist text and 1px gold hairlines are exactly 'simple and classic finishing'. For a Dubai or London prospect it reads as a luxury studio; for Hyderabad or Vijayawada the dark-green-plus-gold language still signals premium without becoming a hotel template, because gold is a line not a fill and bronze replaces gold on cream. Services are not hidden: three editorial plates with all ten links in visible rows, plus the family nav inside the hero. The Telugu story is the strongest of the three: a full-bleed dark band, the microphone photo reused as a product shot, and the Telugu line at up to 56px. Brand continuity is the best: the mark is literally the protagonist, the wordmark and footer are untouched, owner decisions (no project previews on home, AI labels, credits, no oversized wordmark) are respected. 3D is used where it makes sense (home hero, About assembly 'Eight people. One creative team.', Voice Agent waveform, 404 missing bar) plus CSS-3D plates, never two canvases on a route. Deductions: four WebGL variants plus every route restyled is a lot for one session (feasibility 6.5); transmission glass is the heaviest material of the three and the hero entrance fades the H1 and poster from opacity 0, which would delay LCP (perf 7.5); the dark/cream genre is familiar even if the object is ownable (distinctiveness 8). Homepage has the least 3D of the three (hero only), which the grafts below fix without a second canvas."
+      },
+      {
+        "direction": "Direction 2: Daylight Atelier",
+        "fit_to_owner_words": 6.5,
+        "craft_and_taste": 9,
+        "brand_continuity": 8,
+        "feasibility_in_scope": 5,
+        "performance_accessibility": 9,
+        "distinctiveness": 7,
+        "total": 44.5,
+        "rationale": "Chala neat ga undi, kani adhiripovatledu. This is the best-engineered and most disciplined spec: shared Daylight rig so every object looks photographed on one table, camera-matched poster twins, single-canvas slot manager, low-power renderer settings, strict gold-never-text rule, line one of the H1 never fades so LCP is safe. Taste is impeccable (museum catalogue numerals, ink rules drawing in, plates with mats, shadow direction matching the 3D key light). But the owner asked for rich and mind-blowing, and this direction deliberately keeps everything quiet: objects are small and 'never full-screen', every route is the same warm paper, the only drama is a letter-by-letter serif reveal, which is also the most trend-worn device in the set. A Vijayawada SME or a Dubai prospect would call it tasteful, not stunning. The Telugu story is present but smaller (30px line, microphone photo retired for abstract ceramic bars). Brand continuity is good but the eight pebbles and the tablet/seal/torus still-life introduce new iconography beside the Eightfold. Feasibility is the weakest point: five distinct scenes, five captured posters, a slot manager and dissolving studio.css/refinement.css/photography.css into one file is more than one working session can absorb safely."
+      },
+      {
+        "direction": "Direction 3: Eightfold Kinetic",
+        "fit_to_owner_words": 7.5,
+        "craft_and_taste": 7,
+        "brand_continuity": 7,
+        "feasibility_in_scope": 4.5,
+        "performance_accessibility": 7,
+        "distinctiveness": 7.5,
+        "total": 40.5,
+        "rationale": "The hero idea is the single best story in all three: eight glazed bars resting in a row (eight people) rolling into the Eightfold mark, then unfolding on scroll, and the same bars returning as the Process Dial. It is literal, brand-true and memorable, and it gives the most 3D. But as the owner I would not send the rest to a client as 'simple and classic': magnetic buttons, a custom cursor ring with Drag/View labels, a horizontal scroll-snap services rail, a pinned process column, rotating outlines in the footer and banner, a scroll cue and a brief sheet are the standard Awwwards agency kit the brief explicitly warns against, and together they break the direction's own 'one kinetic idea per section' rule. The rail actively hides services: only one of three families is on screen at a time on desktop, and phones must swipe horizontally through families, while the owner-preferred AI illustrations are removed from the homepage against a recorded owner decision. Typography stays Geist-dominant, so the step up in richness from today's site is the smallest. Performance is mixed: the lightest GPU materials (no transmission, no shadow maps) but a fixed full-viewport canvas always compositing, high-performance GPU preference, a constantly animating cursor spring, and a hidden-scrollbar rail with weak affordance. Feasibility is the lowest: drei Views over a horizontally scrolling rail inside a fixed canvas, scroll-spy tabs, reading progress, test-file changes and folding three legacy CSS files are many independent risks for one session."
+      }
+    ],
+    "winner": "Direction 1: Eightfold Atelier — cinematic editorial luxury",
+    "graft_ideas": [
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Process Dial: a CSS-3D dial of the eight Eightfold bars beside the process disclosures, lighting two bars per step (4 steps x 2 bars = 8), driven by native `toggle` events on the existing `<details name=\"project-process\">`, restyled in Atelier tokens (brass-lit bars, gold hairline outlines for unlit bars, cream surface). Step 1 lit without JS; instant state under reduced motion.",
+        "why": "Gives the homepage a second brand-true 3D moment without a second canvas, ties 'eight bars = eight people = one process' into the section the owner already uses, and stays keyboard-operable because it only listens to the native disclosures."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Hero entrance as a brief assembly: the eight glass bars settle from a loose spread or row into the mark over about 1.2s with 55ms stagger (no bounce) before the slow idle turn begins, with Direction 3's registered `@property --t` CSS/SVG assembly as the no-WebGL fallback. About keeps Direction 1's full scroll-linked exploded version.",
+        "why": "Makes the 'Eight people. One creative team.' note land in the first second and turns the hero object from a rotating logo into a story, which is what the owner means by mind-blowing; the fallback means even weak devices see the idea."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Single-canvas slot manager (`use-single-canvas.ts`): each stage registers an IntersectionObserver with 25% rootMargin, the intersecting stage nearest the viewport centre owns the only Canvas, losers unmount and show their poster; plus camera-matched poster twins captured from the identical camera.",
+        "why": "Keeps the hard one-canvas-per-route rule while allowing a future second stage on Home or About, and guarantees the fallback composition is pixel-identical to the live scene so the no-JS, reduced-motion and mobile experiences look designed, not degraded."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Renderer discipline: `powerPreference: 'low-power'`, `gl.transmissionResolutionScale = .5`, `<AdaptiveDpr>` alongside `PerformanceMonitor`, Environment resolution 64 to 128, a `StageErrorBoundary` plus `webglcontextlost` restore, and the rule that H1 line one and the poster never animate opacity.",
+        "why": "Direction 1's transmission glass is the costliest thing in any of the three specs; halving the transmission pass and keeping LCP candidates painted at full opacity from the first frame protects the LCP under 2.0s budget."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "`data-tone=\"cream|forest\"` (and cream-deep) attribute on sections and header that swaps `--bg`, `--fg`, `--fg-muted`, `--hairline`, `--focus`, so buttons, links, eyebrows, numerals and focus rings are written once against tone variables; the header reads the band currently under it via one sentinel per band.",
+        "why": "Direction 1 has two surfaces on almost every route; tone variables cut atelier.css roughly in half, make the gold-on-dark versus forest-on-cream focus rings automatic, and remove the pathname-only header tone problem."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Telugu script card: a small cream paper card (about 220px, rotated -4deg) printed with 'మీ కథ. మన భాష.' overlapping the bottom-right of the microphone photo, rising 16px on a `view()` timeline; 160px on phones.",
+        "why": "Makes the Telugu story tactile inside the dark cinema band for Hyderabad and Vijayawada clients, costs only CSS, and keeps the lang=\"te\" line a physical object rather than just text on dark."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Catalogue finishing cues: section index in the eyebrow ('01 — What we do' through '04 — Before you begin'), ink/gold rules that draw left-to-right on entry, and the rule that every DOM shadow falls down-right to match the 3D key light from the top-left.",
+        "why": "Cheap classic cues that make the CSS plates, the hairlines and the 3D object feel lit by the same lamp, which is the 'photographed in one studio' coherence Direction 1 promises."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Wrap the header in `<ViewTransition name=\"mc-header\">` and use a 180ms fade-out / 320ms fade-plus-10px-rise for pages instead of a plain crossfade.",
+        "why": "Isolates the header from the root crossfade so the dark-to-light tone change does not flash during navigation, and the slight rise reads as paper settling, consistent with the atelier feel."
+      }
+    ],
+    "must_fix": [
+      "LCP regression in the hero entrance: eyebrow, H1 lines, lead, actions and note animate from opacity 0 (900ms + 90ms stagger) and the poster fades in at 300ms. Chrome does not record LCP until the element is painted with opacity above 0, so LCP slips by roughly a second. Keep H1 line one and the poster at opacity 1 from first paint (transform-only motion on them, fade only eyebrow/lead/actions/note).",
+      "Transmission on a transparent canvas: `MeshPhysicalMaterial transmission 0.95` refracts whatever the transmission pass renders; with `alpha: true` and no scene background the glass will look dark and muddy, not forest-tinted. Render an in-canvas backdrop (a large plane carrying the same radial forest gradient, or a scene background colour with alpha off for the hero) so the refraction bends the gradient; verify the lite tier (transmission 0, opacity .85) still reads as frosted glass.",
+      "Poster dependency: `public/images/brand/eightfold-glass-poster.webp` does not exist and relies on a dev-only Playwright capture. Commit a hand-authored static poster first (the SVG mark with glass/brass gradients exported to WebP, or the inline SVG carrying the `.image-hero-photo` hook) so `/` never ships a 404 image and `tests/browser-checks.cjs` line 25 passes without the capture; swap in the rendered poster if the capture works.",
+      "Header tone from pathname alone is wrong: /about, /services and /work open dark but are mostly cream, so a dark translucent header sits over long cream pages, and navigation flips dark-to-light instantly. Drive `data-tone` from the band under the header (one sentinel per dark band), transition colours over 200ms, and give the header its own view-transition name.",
+      "Dark tail and dark hole: closing plate (forest-950) plus footer (forest-950) separated only by a hairline becomes one roughly 900px dark block, and the microphone photo's pure black will not match #0B1F18 'seamlessly'. Set the closing plate to forest-900 with gradient and grain or keep a cream margin around it, and blend the photo into the band with a CSS mask-image or forest-tinted gradient overlay.",
+      "Mobile first screen: at 390px the eyebrow, display H1, lead, two stacked 54px actions and the note push the 72vw stage below the fold, so phones never see the signature object first. On <=760px place the stage directly after the H1 at about 56vw (max 280px) or trim the mobile hero so the mark is inside the first viewport.",
+      "Scope for one working session: four WebGL variants, CSS-3D plates and every route restyled will not all land. Phase 1: tokens.css, atelier.css, layering of legacy CSS, header/footer tones, the full homepage (hero scene, plates, Telugu, process with dial, FAQ, closing plate), /services, /services/[slug], /contact. Phase 2, with final-quality SVG fallbacks shipped first: About assembly, Voice Agent waveform, 404 missing bar, ViewTransition shared elements. Do not start phase 2 until typecheck, build and browser checks pass.",
+      "Compositing cost: grain with `mix-blend-mode: overlay` on every dark band plus a `backdrop-filter` header forces re-compositing on scroll, worst on mobile. Use a pre-tinted noise at normal blend with low opacity, enable grain only at >=900px, and keep blur on the header only.",
+      "About scene: `ContactShadows frames={Infinity}` re-renders the shadow every frame although the bars move only with scroll. Use `frames={1}` and re-bake only when `spread` changes, and pause the loop once assembled.",
+      "Homepage service plates: the warm-wood illustrations (`creative-studio-hero.webp`, `service-marketing-plan.webp`) fight the forest/cream/gold hairline frames. Keep the owner-preferred images and their AI label, but crop all three to the same 4:3 focal area and apply a light CSS harmonisation (slight desaturation, warm cream vignette inside the frame) so the plates read as one set.",
+      "Preserve test hooks explicitly in the implementation checklist: `.image-hero-photo` present and visible (opacity 0 is still visible to Playwright, but it must be a real loaded image), exactly ten `.home-service-links a`, no `main a[href^=\"/work/\"]`, `details name=\"project-process\"` with the first open, the link text 'Read our project guides', five `.guide-card`, pagination aria-labels, `.service-hero` 'Discuss your project', contact form ids, 'Open menu' button name and a 404 H1 containing 'circle'; add the `canvas` count <= 1 assertion per route."
+    ]
+  },
+  {
+    "scores": [
+      {
+        "direction": "Direction 1: Eightfold Atelier — cinematic editorial luxury",
+        "fit_to_owner_words": 9,
+        "craft_and_taste": 8.5,
+        "brand_continuity": 7,
+        "feasibility_in_scope": 7,
+        "performance_accessibility": 8,
+        "distinctiveness": 7,
+        "total": 46.5,
+        "rationale": "Best match to 'rich look, simple & classic finishing, 3D wherever sensible, blow my mind'. Richness comes from surface and light (near-black forest stage, warm key, product-shot contact shadow, cream paper) rather than from quantity of effects; finishing is genuinely classic (1px hairlines, 3px plates, 6px buttons, no pills, no glass UI panels, no gradient cards). Type system is disciplined: Instrument Serif only >=28px, italic reserved for the second line, Geist for everything read/clicked/typed, body measure 60-72ch; the contrast table is correct on spot-check (cream on #0B1F18 ~15:1, bronze #7A5F25 on cream ~5.4:1) and the 'gold is a line, not a fill' rule is the right discipline. The 3D is integral: the brand mark itself is the only WebGL protagonist, it disassembles on About to tell the 'eight people' story and loses a bar on 404; Telugu stays photographic (the existing gold mic on black is already a product shot in this palette; the Terra and desk illustrations are literally forest/cream/brass too). Honours every documented owner decision (illustrations kept on home with disclosure, no /work links, footer structure and credits, no oversized footer mark, no fabricated proof). Cliché risk is real and must be managed: deep green + brass + serif italic is the luxury-hotel/whisky code, transmission glass heroes are a 2022-24 trope, and the owner explicitly superseded an 'oversized serif/editorial' direction on 13 Oct (REWORK-BRIEF.md) — a 108px serif display will trigger that memory. Four stacked dark bands (hero, Telugu, closing plate, footer) risk gloom; the closing plate flowing into the dark footer is heavy. Feasibility is the best of the three because it layers legacy CSS instead of rewriting 133KB, shares one mesh across four scenes, and preserves every test selector; transmission and the single poster capture are the only hard parts."
+      },
+      {
+        "direction": "Direction 2: Daylight Atelier",
+        "fit_to_owner_words": 7,
+        "craft_and_taste": 9,
+        "brand_continuity": 7,
+        "feasibility_in_scope": 5,
+        "performance_accessibility": 9,
+        "distinctiveness": 8,
+        "total": 45,
+        "rationale": "The most tasteful and most durable system: one paper surface, forest used as ink, one gold hairline as jewellery, numbered catalogue sections (01-04), ink rules that draw in, matte ceramic objects lit by one shared daylight rig with posters captured from the identical camera, shadow direction matched to the key light, grain with no blend mode. Nothing here will look dated in two years; it is the closest to Aesop/Kinfolk restraint and the freshest material story (ceramic in north light instead of glass in the dark). Performance plan is the strongest (low-power, transmissionResolutionScale .5, env 64, loop paused on hidden tab, line one never animates, first chunk free of three.js). But it under-delivers the owner's actual words: everything is deliberately small and quiet, five tiny objects 'you want to pick up' will not blow the mind of a client who asked for drama and 3D everywhere — its own risk list leads with 'plainness'. Craft deductions: the pebbles-for-eight-people metaphor is twee and is the one scene not derived from the mark; the tablet/seal/torus shelf is literal; letter-by-letter reveals are a worn agency device even when limited to one line. Brand continuity: warm paper + forest ink is the closest to today's light site, but serif on EVERY headline collides harder than Direction 1 with the owner's documented sans choice, it retires the only real photograph from home (owner previously asked for natural photography) and replaces the established forest top rule with gold. Feasibility is the problem: dissolving globals/studio/refinement/photography/header/home/portfolio CSS into a single new layer order in the same session as five scenes, five posters, a canvas slot manager, SerifReveal, InkRule and every route restyle is a big-bang rewrite with a large regression surface (the concept-art CSS alone is hundreds of lines)."
+      },
+      {
+        "direction": "Direction 3: Eightfold Kinetic",
+        "fit_to_owner_words": 7.5,
+        "craft_and_taste": 6.5,
+        "brand_continuity": 6.5,
+        "feasibility_in_scope": 4,
+        "performance_accessibility": 6.5,
+        "distinctiveness": 7.5,
+        "total": 38.5,
+        "rationale": "Owns the two best single ideas in the whole field: the hero where eight bars rest in a row ('eight people') and roll into the mark, and the Process Dial that lights two bars per step (4x2=8) driven by native details toggles. Keeping Geist as the headline face is the most faithful to the owner's documented 13 Oct sans decision, and the GPU budget is sane (no transmission, no shadow maps, <=12k tris). Everything around those ideas is the 2019-22 awwwards kit the brief warned against: a custom cursor ring with 'Drag'/'View' labels, magnetic buttons, a horizontal scroll-snap services rail, pinned storytelling, three decorative 'family objects' (slab/seal/signal) floating in a rail, outlined Eightfolds spinning in footer and banner, a fixed full-page mix-blend-mode:multiply grain at z-index 60. It even cites Locomotive/Resn. That is not 'simple and classic finishing', and 20-24px radius paper panels with lifted shadows contradict its own 'hairlines instead of boxes' rule and keep the current site's card look. Typography: the italic-serif accent word inside a 560-weight Geist line is the most template-like device of the three (x-height and weight mismatch, in every 2024 Framer template). Brand continuity breaks two documented decisions: the services rail hides two of three families off-screen on desktop, exactly the 'tabs, carousels or hidden menus' the 8 Oct confusion fix forbade, and it removes the owner's preferred service illustrations from the homepage. Feasibility is the lowest by a distance: five WebGL scene types on a fixed full-viewport canvas using drei <View> (which actually lives in drei/web, not drei/core as the spec claims; View tracking also has known scroll-jitter), three hand-drawn isometric SVG fallbacks, a CSS @property assembly, rail + controls + progress, dial, cursor, magnetic, tilt, full legacy-CSS consolidation and test rewrites. Perf/a11y concerns: continuous pointer-driven spring work, high-performance power preference on laptops, content-visibility:auto breaking anchor jumps to #how-it-works/#build, shift-wheel rail for mouse users."
+      }
+    ],
+    "winner": "Direction 1: Eightfold Atelier — cinematic editorial luxury",
+    "graft_ideas": [
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Hero entrance tells the 'eight people' story: the eight bars start as a quiet row and roll/rise into the Eightfold mark (1100ms, 55ms stagger, no bounce) before the slow idle turn; scroll unfolds them back toward the row as the hero lifts out.",
+        "why": "Turns Direction 1's rotating object into a brand story the owner can retell, and it reuses the exact `spread` prop the About assembly scene already needs, so it costs almost nothing extra."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Process Dial: eight CSS-3D bars beside the four native <details>, two bars lighting per step, rotation 45° per step, driven by the native toggle event (keyboard-operable, step 1 lit without JS).",
+        "why": "Cheap, integral to the mark, and gives the cream process section its own moment without a second canvas; it also honours 4 steps x 2 bars = 8 people."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "`data-tone=\"dark|light\"` on sections (and the header) that swaps --bg/--fg/--fg-muted/--hairline/--focus tokens, so buttons, links, eyebrows, focus rings and numerals are written once.",
+        "why": "Direction 1 currently specifies dark and light variants component by component; a tone attribute removes duplication and keeps the two surfaces consistent across all routes."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Hand-authored SVG fallback with glaze gradient, per-bar highlight, feDropShadow and per-bar `--i` hooks (`BrandSymbolBars`), plus a CSS `@property` one-time assembly when WebGL is off but motion is allowed.",
+        "why": "Makes the no-JS / reduced-motion / low-end hero finished on day one and removes the hard dependency on capturing the poster before the page looks good; the poster becomes an enhancement rather than a blocker."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Add the two test extensions: a reduced-motion emulation check (no canvas or [data-paused=true]) and a JavaScript-disabled check that h1, ten service links and the fallback SVG render.",
+        "why": "Hard constraints 1 and 2 are otherwise unenforced; these make the progressive-enhancement promise regress-proof."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Matte ceramic material family (cream/sage MeshPhysicalMaterial with roughness ~.6, clearcoat ~.35, sheen) as the lite tier and for About/404 instead of 'glass with transmission off, opacity .85'.",
+        "why": "Transmission-off fake glass looks cheap; ceramic reads finished at a fraction of the cost and keeps glass-and-brass as a full-tier hero privilege, which also protects mid-range laptops."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Renderer discipline: `powerPreference: 'low-power'`, `gl.transmissionResolutionScale = 0.5`, ACES tone mapping, Environment 64-128 rendered once, `<AdaptiveDpr>`, pause the loop on `document.visibilityState !== 'visible'`, and a small error boundary that restores the poster.",
+        "why": "Direction 1's transmission material renders the scene twice; these settings halve that cost and cover tab-hidden and context-loss cases its spec only partly handles."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Grain as plain low-opacity noise with no blend mode, enabled only at >=900px; and the hero object overlapping its stage frame by ~6% with the contact shadow landing on the page.",
+        "why": "Blend-mode overlays on four full-bleed bands are a scroll-performance tax for no visible gain; the overlap makes the mark read as an object on the page rather than an image in a box."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Section index numerals in every eyebrow ('01 — What we do' ... '04 — Before you begin') with the gold rule drawing in at each numbered section, and `<ViewTransition name=\"mc-header\">` around the header so it persists across route fades.",
+        "why": "Extends Direction 1's catalogue numerals from the services rows to the whole homepage for a consistent editorial spine, and stops the header flashing during page transitions."
+      }
+    ],
+    "must_fix": [
+      "Cliché guard on the dark surfaces: forest-black + brass + serif italic is the boutique-hotel code. Keep gold strictly to 1px hairlines, the wordmark period and 12px eyebrows on dark; no gold glows, no gold large text, no gold buttons; use forest-900 #11291F with the warm radial gradient as the hero base so it reads 'deep green', with #0B1F18 reserved for the footer.",
+      "Do not stack the closing plate on the footer: two full-bleed forest-950 blocks back to back (~900px of dark at page end) is heavy and pushes the dark share past the stated 35%. Keep ContactBanner as an inset forest-900 plate inside a cream/cream-deep band with margins, or fold the CTA into the footer top.",
+      "Serif scale and owner memory: the owner superseded an 'oversized serif/editorial' direction on 13 Oct. Cap display-1 at ~88-96px (not 108px), keep Instrument Serif to H1/H2/family titles only, keep every lead, link, button and h3-utility in Geist, and show the owner a re-skinned homepage screenshot after implementation step 1 before building further.",
+      "Telugu band: the microphone photo is pure #000 and the band is #0B1F18, so the claimed seamless bleed will show as a hard rectangle. Either frame it honestly as a hairline plate, or add a mask-image/gradient fade on the photo edges and darken the band locally behind it.",
+      "Transmission needs something to refract: with an alpha canvas and no background, MeshPhysicalMaterial transmission samples a transparent render target and the glass reads as dark plastic. Add a large matte backdrop plane in the band gradient colours (or a scene background) behind the mark, and verify the glass reads as glass before shipping the material.",
+      "Header tone must follow the band under it, not the route: on '/' the dark glass header would sit over cream content after the hero. Observe the dark bands with IntersectionObserver and switch to the light tone when none is under the header; derive the services tone with `path === '/services'` exactly, since /services/[slug] is cream.",
+      "Cascade order: placing `atelier` before `responsive` lets legacy breakpoint rules in globals.css override the new design for shared selectors (.contact-banner, .site-footer, .page-intro, .service-hero, .portfolio-*). Put `atelier` after `responsive` and own its breakpoints, and wrap header.css and home.css in layers too (unlayered CSS currently beats every layer).",
+      "Make the server-rendered hero finished without the captured poster (styled SVG fallback with glaze, highlight and contact shadow); keep the poster `<Image className=\"image-hero-photo\">` in the DOM at opacity 0 after canvas handoff (Playwright counts an opacity-0 element with a box as visible), and add the canvas<=1 per route assertion to tests/browser-checks.cjs.",
+      "Replace the lite-tier 'frosted glass opacity .85' with a matte ceramic material and give phones the ceramic or the poster, never transmission; add `powerPreference: 'low-power'`, `transmissionResolutionScale: 0.5` and a visibility-state pause.",
+      "Keep services within reach of the first screen: cap the hero at about 80svh / 760px at 1440x900 so the family hairline nav and the 'What we do' heading peek above the fold, matching the 13 Oct decision that services follow the opening directly.",
+      "Raise 11px gold eyebrows and 11px chips to 12px minimum and check the Telugu line at 320px with the system font (Nirmala UI/Noto Sans Telugu) so it never wraps mid-word on the dark band.",
+      "Keep the existing header behaviours and test hooks exactly (menu button names, Escape focus return, dropdown aria, process details name attribute, 'Read our project guides', pagination names, contact form ids) and do not remove the service illustrations or the AI-generated disclosure from the homepage."
+    ]
+  },
+  {
+    "scores": [
+      {
+        "direction": "Direction 1: Eightfold Atelier — cinematic editorial luxury",
+        "fit_to_owner_words": 9,
+        "craft_and_taste": 9,
+        "brand_continuity": 7,
+        "feasibility_in_scope": 7,
+        "performance_accessibility": 8,
+        "distinctiveness": 8,
+        "total": 48,
+        "rationale": "Best match to 'rich look, simple and classic finishing, mind-blowing': one hero object (glass-and-brass Eightfold) lit like a product shot over near-black forest, then calm cream reading pages with hairlines and a disciplined serif-speaks/sans-works type system. Performance posture is the most conservative of the three: one canvas per route (home hero only; Telugu section stays photography), poster/text LCP with WebGL deferred to idle, dpr [1,1.5], baked ContactShadows frames=1, Environment frames=1 with Lightformers (verified: drei renders children into a cube, no network), frameloop never when offscreen, transmission only on the 'full' tier. Every contrast pair in its token table checks out (bronze 5.38, muted on cream-deep 4.89, line-strong 3.87 for UI boundaries, gold banned as text on cream at 1.71). Geometry is tiny (CapsuleGeometry 4x12 segments). The same mesh with spread/missing props covers hero, About and 404, so the 3D surface is one component with variants, and the existing src/components/three/scene-canvas.tsx scaffold already implements most of SceneFrame. Deductions: dark header tone and serif headlines depart from the documented 13 Oct decisions (light header with green rule; the 'oversized serif/editorial direction is superseded'), grain uses mix-blend-mode overlay on dark bands (compositing cost on mid-range Android), the 'full' tier still gives transmission to 1024px integrated-GPU laptops and PerformanceMonitor only steps dpr, reduced motion still downloads the 3D chunk for a static frame, the ~150KB gz estimate for three+R3F+drei is optimistic (three core alone is ~170KB gz), and the WebP poster is an asset that does not exist yet and must be produced by a dev-only capture; the inline SVG beneath it is the honest fallback. Legacy CSS is layered rather than rewritten, which is the right call for one session, but home.css (imported by page.tsx), portfolio.css and header.css must be layered too or they beat the new layer."
+      },
+      {
+        "direction": "Direction 2: Daylight Atelier",
+        "fit_to_owner_words": 7,
+        "craft_and_taste": 9,
+        "brand_continuity": 8,
+        "feasibility_in_scope": 5,
+        "performance_accessibility": 8,
+        "distinctiveness": 7,
+        "total": 44,
+        "rationale": "The most refined and the most accessible spec: warm paper everywhere, forest as ink, numbered catalogue sections, ink rules, a shared daylight rig so five ceramic objects look photographed on one table, and the strictest gating (no WebGL below 760px, on coarse pointers, under reduced motion or save-data; low-power context; transmissionResolutionScale .5, which exists in three 0.186; Environment 64; posters ~45KB; grain only >=900px without blend mode; tab-visibility pause; letter spans aria-hidden with an sr-only full line). Contrast pairs verified (moss 5.19 on paper, ink-soft 7.63 on parchment, line-ui 3.98). It is also the closest palette evolution and keeps a light header. But it under-delivers the owner's 'mind-blowing' ask: objects are small, never full-screen, and the signature moment is a letter-by-letter serif reveal plus a floating ceramic logo, which is elegant rather than dramatic. Feasibility is the weak point: five distinct scenes, five posters that must be captured from the scenes (and the posters ARE the mobile/no-JS/reduced-motion experience, so they are mandatory, not polish), SerifReveal, InkRule, TiltCard, view transitions, and dissolving studio.css, refinement.css and photography.css (about 133KB of CSS) into a new single layer order in the same session. Its single-canvas manager unmounts a losing stage's canvas and mounts the winner's as you scroll, which on home (hero + voice bars) means repeated WebGL context creation and MeshPhysicalMaterial shader recompiles mid-scroll: a real jank source and a context-limit risk on mobile. It also retires the microphone photo the owner currently has, and serif for every headline brushes against the rejected editorial direction."
+      },
+      {
+        "direction": "Direction 3: Eightfold Kinetic",
+        "fit_to_owner_words": 7,
+        "craft_and_taste": 6,
+        "brand_continuity": 7,
+        "feasibility_in_scope": 4,
+        "performance_accessibility": 6,
+        "distinctiveness": 8,
+        "total": 38,
+        "rationale": "Strongest single idea (eight bars = eight people, assembling into the mark, returning as a Process Dial lit two bars per step) and the best LCP story: the hero is server HTML text plus an inline glazed SVG with a CSS @property assembly, so no poster and no asset pipeline are needed; every 3D moment has a finished SVG fallback and the tests gain reduced-motion and no-JS checks. It keeps Geist as the headline voice, which is the closest typographic continuity with the current site and the 13 Oct decision. But it piles on agency-template tropes the brief warned against (custom cursor ring mounted in layout on every route, magnetic buttons, horizontal drag rail with hidden scrollbar, sticky pinned process, scroll cue, 112px tight-tracked display with italic accent words), which costs 'simple and classic'. Performance and a11y have concrete flags: a fixed full-viewport alpha canvas with drei Views means the compositor blends the whole viewport every frame at dpr 1.5 (heavy on the owner's own Intel UHD 630 and on mid-range Android); powerPreference 'high-performance' for a decorative scene; WebGL hero kept on mid-range phones; a fixed full-viewport grain with mix-blend-mode multiply on all devices; pointermove-driven spring work for the cursor ring; sage-200 serif numerals on cream (1.18:1) and line-dark numerals on forest-900 (1.62:1) are visible text that axe will flag in the e2e suite unless aria-hidden; a 100vw breakout rail risks the scrollWidth overflow assertion on Windows scrollbars; content-visibility:auto fights the smooth-scroll anchors (#services, #build). It also removes the owner's preferred service illustrations from the home services section against the recorded decision, replaces the .image-hero-photo test hook, and says deep imports from drei/core only while View lives in drei/web. Scope is the largest (scene host with Views, five scenes, dial, rail + controls + progress, scroll-spy tabs, magnetic, cursor ring, hand-drawn isometric SVGs, folding all legacy CSS) and it does not fit the existing per-container SceneCanvas scaffold."
+      }
+    ],
+    "winner": "Direction 1: Eightfold Atelier — cinematic editorial luxury",
+    "graft_ideas": [
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Server-rendered inline SVG Eightfold hero fallback with glaze gradient, per-bar highlight and feDropShadow, plus the one-time CSS assembly (registered @property --t, bars from a row into the mark) when WebGL is off but motion is allowed; the WebP poster becomes optional polish layered above it.",
+        "why": "Removes the dependency on a poster that does not exist yet, keeps hero LCP as pure text, gives a finished no-JS/reduced-motion/low-end hero on day one, and still tells the 'eight people' story without WebGL."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Process Dial: eight CSS-3D bars inside perspective(900px) rotateX(58deg) that light two bars per step, driven by the native <details> toggle events, placed in the process section's left column.",
+        "why": "On-brand, zero WebGL, keyboard operable by construction (it follows the native disclosures the test already clicks), and gives the cream process section a 3D moment without a second canvas."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "BrandSymbolBars component (same geometry as brand.tsx with per-bar --i and class hooks) to generate the exploded, missing-bar and assembly SVG variants, the dial and the 404.",
+        "why": "D1 needs EightfoldOutline variants anyway; one parameterised SVG component keeps the mark the only logo and avoids four hand-drawn SVGs."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "data-tone attribute on sections (cream | sage | forest) that swaps --bg, --fg, --fg-muted, --hairline and --focus tokens, extending D1's header tone idea to every band.",
+        "why": "D1 alternates dark and cream bands on every route; tone tokens let buttons, links, labels and focus rings be written once and keep the gold-text-only-on-dark rule enforceable in CSS."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Keyboard parity for pointer effects: :focus-visible applies the lifted-plate shadow state on TiltCard and buttons (without tilt), and MotionConfig reducedMotion=\"user\" wraps the motion-based wrappers.",
+        "why": "WCAG 2.2 focus appearance and parity for keyboard users; D1 specifies hover states in detail but only a focus ring for keyboard."
+      },
+      {
+        "from_direction": "Direction 3: Eightfold Kinetic",
+        "idea": "Test additions: a reduced-motion emulation pass asserting no running canvas (canvas absent or [data-frameloop=demand]) and a JavaScript-disabled context asserting the h1, ten service links and the fallback SVG render.",
+        "why": "Turns hard constraints 1 and 2 into executable checks alongside D1's planned 'canvas count <= 1 per route' assertion."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Do not mount WebGL at all under prefers-reduced-motion, below 760px, on coarse pointers, with saveData or deviceMemory < 4; show the poster/SVG in the same frame instead of rendering a static 3D frame.",
+        "why": "D1 currently downloads the 3D chunk and creates a GL context under reduced motion just to draw one frame; the poster already is the static pose, so this saves ~200KB and a context on exactly the devices that need it."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Canvas creation settings: powerPreference 'low-power' (or 'default'), gl.transmissionResolutionScale = 0.5, ACESFilmic tone mapping with exposure ~1.05, Environment resolution 64-128, ContactShadows 256 on lite.",
+        "why": "Halves the cost of the transmission pass (verified available in three 0.186), avoids waking the discrete GPU for a decorative scene, and keeps the glass look on Intel UHD-class GPUs like the owner's machine."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "eventSource set to the surrounding hero section with the canvas at pointer-events: none, so lean-to-cursor works across the whole hero while the copy and buttons stay directly clickable.",
+        "why": "Avoids the canvas intercepting pointer events over the stage and gives a wider, smoother parallax field without any extra listeners."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "StageErrorBoundary class component plus a webglcontextlost listener that restore the poster permanently.",
+        "why": "The e2e suite runs headless Edge with WebGL on and asserts zero pageerror; any R3F runtime exception without a boundary fails the whole run, and context loss on mobile must degrade to the poster, not a blank stage."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "Capture the hero poster from the identical camera, fov and lighting as the live scene (dev-only capture page with preserveDrawingBuffer, committed as WebP), and keep paper grain only at >=900px with no blend mode.",
+        "why": "Identical framing makes the poster-to-canvas crossfade invisible and CLS-free; dropping mix-blend-mode removes a per-frame compositing cost on mid-range Android."
+      },
+      {
+        "from_direction": "Direction 2: Daylight Atelier",
+        "idea": "SectionLabel gains an optional index prop ('01 — What we do') and the concept-art components switch their Georgia declarations to var(--font-display).",
+        "why": "Cheap editorial numbering that pairs with D1's serif numerals, and it makes Instrument Serif consistent across the portfolio concept art instead of a stray Georgia fallback."
+      }
+    ],
+    "must_fix": [
+      "CSS cascade: every legacy stylesheet must be inside a named layer, not only studio.css and refinement.css. home.css (imported from page.tsx), portfolio.css, header.css and photography.css are unlayered today and any unlayered rule beats the new atelier layer; wrap each file's contents in its layer or author the rewritten files inside layers, and verify no unlayered selectors remain apart from the :root token block.",
+      "Build the 3D wrapper on the existing src/components/three/scene-canvas.tsx + lazy.tsx scaffold instead of a parallel SceneFrame: add an error boundary and webglcontextlost handling that restore the poster, change powerPreference from 'high-performance' to 'default'/'low-power', keep the SSR poster/SVG as a sibling beneath the canvas (not the fallback prop, which only renders when WebGL is absent), and set frameloop to 'never' after the hero scrolls out.",
+      "Quality tiers: do not load the 3D chunk under prefers-reduced-motion (the poster is the static pose); treat navigator.deviceMemory undefined as unknown rather than 'full'; make PerformanceMonitor onDecline drop transmission to the frosted material as well as stepping dpr, because the 'full' tier currently includes 1024px laptops on integrated GPUs (the owner's own machine reports Intel UHD 630).",
+      "Grain: remove mix-blend-mode overlay on the dark bands; use an opacity-only data-URI grain, enable it only at >=900px, and keep it off under prefers-reduced-data. A blend-mode layer over full-width bands is a continuous compositing cost on mid-range Android.",
+      "Poster dependency: the hero must look finished before public/images/brand/eightfold-glass-poster.webp exists. Ship the glazed inline SVG first, produce the poster with a deterministic dev-only capture from the identical camera, cap it at ~120KB with exact sizes and preload, and decide up front whether .image-hero-photo stays on an SSR <Image> or the test is updated alongside; the test suite must not depend on an asset the pipeline may not produce.",
+      "JavaScript budget realism: three core alone is ~170KB gzipped, so budget the 3D chunk at <=250KB gz and the first-party JS before idle at <=150KB gz; verify from next build output, import motion only inside client wrappers (never in layout.tsx), and import drei by name (sideEffects:false is confirmed, so named imports tree-shake).",
+      "Header: provide a solid-colour background below 760px instead of backdrop-filter blur, keep the IntersectionObserver sentinel approach, and make the dropdown open/close animation work with the hidden attribute (use @starting-style or a class-driven visibility) rather than assuming a fade on hidden toggling.",
+      "About assembly scene: ContactShadows frames=Infinity re-renders the scene from below every frame; recompute only while spread changes and bake (frames=1) once assembled, keep the IO-driven auto-assemble path for keyboard-only and touch users, and never couple the assembly to wheel events (scroll position only).",
+      "Record the two documented decisions this direction supersedes before building: the 13 Oct 'light header with forest-green top rule' (now dark tone on /, /about, /services, /work and 404) and 'the oversized serif/editorial direction is superseded' (now Instrument Serif for headings >=28px). Keep the guardrails that distinguish this from the rejected look: serif only at >=28px and numerals, Geist for all reading text, cream for ~65% of page height, gold never as text on cream.",
+      "Mobile LCP and layout: keep the H1 as the mobile LCP (stage after copy, no preload-induced priority on a below-fold poster at 390px), keep the stage inside an aspect-ratio box with max-width 100%, verify the Telugu line clamp and the family-anchor hairline row at 320px so the scrollWidth <= innerWidth assertion holds on every route.",
+      "Accessibility under test: the e2e suite runs axe on <main> with WebGL enabled, so the canvas container must stay aria-hidden with no focusable children, serif numerals must remain bronze (5.38:1) or be aria-hidden if ever lightened, the Voice Agent SVG fallback must keep its role=img label, and the gold H1 period span must only render on dark surfaces (gold on cream is 1.71:1)."
+    ]
+  }
+]

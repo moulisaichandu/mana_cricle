@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { emptyBrief, formatBrief, validateBrief } from "../src/lib/enquiry.ts";
+import { emptyBrief, emptyQuickEnquiry, formatBrief, formatQuickEnquiry, isQuickEnquiryPayload, validateBrief, validateQuickEnquiry } from "../src/lib/enquiry.ts";
 import { handleEnquiry, validReceiver } from "../src/lib/enquiry-server.ts";
 
 const sample = { ...emptyBrief, name: "Test Person", service: "website-design", contact: "test@example.com", description: "A responsive website for a sample local business.", consent: true };
@@ -79,4 +79,46 @@ test("explicit receipt forwards only allowed data and a stable idempotency key",
   };
   for (let i = 0; i < 2; i++) { const result = await handleEnquiry(request({ ...sample, admin: true }), config, send); assert.equal(result.status, 201); assert.equal((await result.json()).id, "lead-123"); }
   assert.equal(calls, 2); // Deduplication is the durable receiver's responsibility.
+});
+
+const quick = { ...emptyQuickEnquiry, name: "Test Person", phone: "+91 98765 43210", email: "test@example.com", service: "qr-digital-menus", consent: true };
+
+test("quick enquiry is normalized, forces its kind and accepts formatted phone numbers", () => {
+  const result = validateQuickEnquiry({ ...quick, kind: "brief", name: "  Test Person  ", admin: true }, true);
+  assert.deepEqual(result.errors, {}); assert.equal(result.data.kind, "quick"); assert.equal(result.data.name, "Test Person"); assert.equal("admin" in result.data, false);
+  for (const phone of ["+1 (415) 555-0123", "919876543210", "+44 20-7946-0958"]) assert.deepEqual(validateQuickEnquiry({ ...quick, phone }).errors, {});
+  assert.deepEqual(validateQuickEnquiry({ ...quick, consent: false }).errors, {}); // Download does not require contact consent.
+});
+test("quick enquiry rejects bad phone, email, service, missing consent and honeypot before the receiver", async () => {
+  const cases: [string, Record<string, unknown>][] = [["phone", { ...quick, phone: "" }], ["phone", { ...quick, phone: "+91 123" }], ["phone", { ...quick, phone: "call me 98765 43210" }], ["phone", { ...quick, phone: "1".repeat(16) }], ["email", { ...quick, email: "not-an-email" }], ["service", { ...quick, service: "unknown" }], ["consent", { ...quick, consent: false }], ["honeypot", { ...quick, honeypot: "spam" }]];
+  for (const [field, data] of cases) {
+    const result = await handleEnquiry(request(data), config, noSend); assert.equal(result.status, 422);
+    const { errors } = await result.json(); assert.ok(errors[field], `${field} should be flagged`); assert.deepEqual(Object.keys(errors), [field]);
+  }
+});
+test("missing receiver, missing request ID and unconfirmed receipt cannot report success for quick enquiries", async () => {
+  assert.equal((await handleEnquiry(request(quick), {}, noSend)).status, 503);
+  assert.equal((await handleEnquiry(request(quick, { "Idempotency-Key": "" }), config, noSend)).status, 400);
+  assert.equal((await handleEnquiry(request(quick), config, async () => Response.json({}))).status, 502);
+});
+test("quick enquiry forwards only its own fields with the request ID and gets the call-back message", async () => {
+  const send: typeof fetch = async (url, init) => {
+    assert.equal(url, config.url); const headers = new Headers(init?.headers); assert.equal(headers.get("Idempotency-Key"), key); assert.equal(headers.get("Authorization"), "Bearer test-only-token");
+    assert.deepEqual(JSON.parse(init?.body as string), { requestId: key, source: "manacircle-website", enquiry: { kind: "quick", name: "Test Person", phone: "+91 98765 43210", email: "test@example.com", service: "qr-digital-menus", consent: true } });
+    return Response.json({ accepted: true, id: "lead-123" });
+  };
+  const result = await handleEnquiry(request({ ...quick, name: "  Test Person  ", admin: true }), config, send);
+  assert.equal(result.status, 201); const body = await result.json(); assert.equal(body.id, "lead-123"); assert.match(body.message, /call or email you/);
+});
+test("quick enquiry download names the service and says it was not sent", () => {
+  const text = formatQuickEnquiry(quick);
+  assert.match(text, /CALL-BACK REQUEST/); assert.match(text, /QR menus for restaurants & cafés/); assert.match(text, /\+91 98765 43210/); assert.match(text, /has not been sent to ManaCircle/);
+});
+test("payload kind selects the validator and briefs without kind keep the existing path", async () => {
+  assert.equal(isQuickEnquiryPayload(quick), true);
+  for (const raw of [sample, null, "quick", { kind: "brief" }]) assert.equal(isQuickEnquiryPayload(raw), false);
+  const quickErrors = (await (await handleEnquiry(request({ ...sample, kind: "quick" }), config, noSend)).json()).errors;
+  assert.ok(quickErrors.phone && quickErrors.email); assert.equal("description" in quickErrors, false);
+  const brief = await handleEnquiry(request(sample), config, async (_url, init) => { const payload = JSON.parse(init?.body as string); assert.equal("kind" in payload.enquiry, false); assert.equal(payload.enquiry.description, sample.description); return Response.json({ accepted: true, id: "lead-123" }); });
+  assert.equal(brief.status, 201); assert.match((await brief.json()).message, /preferred contact/);
 });

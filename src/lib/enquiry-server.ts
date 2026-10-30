@@ -1,4 +1,4 @@
-import { validateBrief } from "./enquiry.ts";
+import { isQuickEnquiryPayload, validateBrief, validateQuickEnquiry } from "./enquiry.ts";
 
 export type ReceiverConfig = { url?: string; token?: string; publicOrigin?: string };
 export function validReceiver(config: ReceiverConfig) {
@@ -34,7 +34,9 @@ export async function handleEnquiry(request: Request, config: ReceiverConfig, se
     for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
     raw = JSON.parse(new TextDecoder().decode(bytes));
   } catch { return response(400, "We couldn’t read the enquiry. Please try again."); }
-  const { data, errors } = validateBrief(raw, true);
+  // `kind: "quick"` marks the contact modal's call-back request; anything else is validated as a full project brief.
+  const quick = isQuickEnquiryPayload(raw);
+  const { data, errors } = quick ? validateQuickEnquiry(raw, true) : validateBrief(raw, true);
   if (Object.keys(errors).length) return response(422, "Please check the highlighted fields.", { errors });
   if (!validReceiver(config)) return response(503, "Online enquiries are not connected yet. You can download your project brief instead.");
   const requestId = request.headers.get("idempotency-key") || "";
@@ -48,7 +50,7 @@ export async function handleEnquiry(request: Request, config: ReceiverConfig, se
     });
     const receipt: unknown = result.ok ? await result.json() : null;
     if (!result.ok || !receipt || typeof receipt !== "object" || !("accepted" in receipt) || receipt.accepted !== true || !("id" in receipt) || typeof receipt.id !== "string" || !/^[\w-]{1,100}$/.test(receipt.id)) return response(502, "We couldn’t confirm receipt. Your details are still here; please retry or download your brief.");
-    return response(201, "Your enquiry was received. We’ll use your preferred contact to discuss the scope.", { id: receipt.id });
+    return response(201, quick ? "Your request was received. We’ll call or email you to plan the next step." : "Your enquiry was received. We’ll use your preferred contact to discuss the scope.", { id: receipt.id });
   } catch {
     return response(502, "We couldn’t confirm receipt. Your details are still here; please retry or download your brief.");
   }

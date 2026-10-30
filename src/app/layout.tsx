@@ -14,6 +14,7 @@ import "./header.css";
 import "./refinement.css";
 
 const studioFont = localFont({ src: "../../public/fonts/geist-latin.woff2", variable: "--font-studio", display: "swap", weight: "100 900" });
+const displayFont = localFont({ src: [{ path: "../../public/fonts/InstrumentSerif-Regular.ttf", weight: "400", style: "normal" }, { path: "../../public/fonts/InstrumentSerif-Italic.ttf", weight: "400", style: "italic" }], variable: "--font-display", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -34,5 +35,5 @@ const headerServiceGroups = serviceFamilies.map(group => ({
 }));
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <html lang="en" data-scroll-behavior="smooth"><body id="top" className={studioFont.variable}><StructuredData data={organization} /><StructuredData data={{ "@context": "https://schema.org", "@type": "WebSite", "@id": absoluteUrl("/#website"), name: site.name, url: absoluteUrl(), inLanguage: "en", publisher: { "@id": absoluteUrl("/#organization") } }} /><a className="skip-link" href="#main-content">Skip to content</a><Header serviceGroups={headerServiceGroups} /><main id="main-content">{children}</main><Footer /></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth"><body id="top" className={`${studioFont.variable} ${displayFont.variable}`}><StructuredData data={organization} /><StructuredData data={{ "@context": "https://schema.org", "@type": "WebSite", "@id": absoluteUrl("/#website"), name: site.name, url: absoluteUrl(), inLanguage: "en", publisher: { "@id": absoluteUrl("/#organization") } }} /><a className="skip-link" href="#main-content">Skip to content</a><Header serviceGroups={headerServiceGroups} /><main id="main-content">{children}</main><Footer /></body></html>;
 }

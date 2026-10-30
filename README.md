@@ -79,6 +79,25 @@ With no receiver, the form downloads a text brief to the visitor’s device. It 
 }
 ```
 
+#### Quick enquiry payload
+
+The site-wide contact modal sends a lighter call-back request through the same route, headers and request ID. Its `enquiry` carries `kind: "quick"` and only the fields below; the full project brief above has no `kind` field. Receivers must accept both shapes and distinguish them by `enquiry.kind === "quick"`. The route validates the quick shape before forwarding: a name of 2–100 characters, a phone number with 8–15 digits (optional leading `+`, spaces, parentheses and hyphens allowed), a valid email address, a known `service` value and explicit contact consent. Without a receiver, the modal only offers a local text download, like the brief form.
+
+```json
+{
+  "requestId": "7d75b1cc-8216-4b53-99a2-6096b94219ac",
+  "source": "manacircle-website",
+  "enquiry": {
+    "kind": "quick",
+    "name": "Example Person",
+    "phone": "+91 98765 43210",
+    "email": "example@example.com",
+    "service": "qr-digital-menus",
+    "consent": true
+  }
+}
+```
+
 The receiver must save the lead durably before returning HTTP 2xx with:
 
 ```json
