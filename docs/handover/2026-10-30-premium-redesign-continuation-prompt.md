@@ -10,7 +10,7 @@
 
 ## 1. State of the repository at handover (facts)
 
-- Branch `design/clear-premium-studio` (pushed; `main` fast-forwarded to the same commit at handover).
+- Branch: everything is on `main` (the owner asked for a single branch; `design/clear-premium-studio` was fast-forwarded into `main` and then deleted at handover).
 - Last commits: `421f7cd wip(design): premium 3D redesign handoff — spec, 3D primitives, quick-enquiry API`,
   `b5efeac feat(site): refresh ManaCircle identity, design and worldwide content`.
 - Verified at handover: `npm run typecheck` → exit 0. `npm test` → 21 pass, 0 fail. Dev server: `npm run dev`
